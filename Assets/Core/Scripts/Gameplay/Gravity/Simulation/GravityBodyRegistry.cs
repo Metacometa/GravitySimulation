@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
 
-namespace GravitySim.Gameplay.Gravity
+namespace GravitySimulator.Gameplay.Gravity.Simulation
 {
     public class GravityBodyRegistry
     {

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySim.Gameplay.Gravity
+namespace GravitySimulator.Gameplay.Gravity.Simulation
 {
     public class GravityController : MonoBehaviour
     {
@@ -23,8 +22,11 @@ namespace GravitySim.Gameplay.Gravity
             {
                 for (int j = i + 1; j < _gravityBodiesBuffer.Count; ++j)
                 {
-                    _gravityBodiesBuffer[i].AddForce(_gravityBodiesBuffer[j]);
-                    _gravityBodiesBuffer[j].AddForce(_gravityBodiesBuffer[i]);
+                    if (_gravityBodiesBuffer[i].GravityBodyType == _gravityBodiesBuffer[j].GravityBodyType)
+                        continue;
+
+                    _gravityBodiesBuffer[i].AddGravitationalForce(_gravityBodiesBuffer[j]);
+                    _gravityBodiesBuffer[j].AddGravitationalForce(_gravityBodiesBuffer[i]);
                 }
             }
 

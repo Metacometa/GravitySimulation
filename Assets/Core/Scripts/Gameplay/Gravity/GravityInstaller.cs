@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
+using GravitySimulator.Gameplay.Gravity.Simulation;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySim.Gameplay.Gravity
+namespace GravitySimulator.Gameplay.Gravity
 {
     public class GravityInstaller : MonoInstaller
     {
