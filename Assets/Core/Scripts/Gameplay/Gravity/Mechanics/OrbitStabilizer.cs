@@ -19,12 +19,18 @@ namespace GravitySimulator.Gameplay.Gravity.Mechanics
         )
         {
             Vector2 dir = attractorPos - bodyPos;
+            
             float radius = dir.magnitude;
+            if (radius < 0.01f)
+                return velocity;
 
             // Radial direction (attractor → body)
             Vector2 radial = dir.normalized;
             // Tangential direction (along the orbit)
             Vector2 tangent = Vector2.Perpendicular(radial);
+
+            if (Vector2.Dot(velocity, tangent) < 0)
+                tangent = -tangent;
 
             float radialSpeed = Vector2.Dot(velocity, radial);  
             float tangentialSpeed = Vector2.Dot(velocity, tangent);
