@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
-using Zenject;
 
 namespace GravitySimulator.Gameplay.Orbital
 {
     public class OrbitComponent : MonoBehaviour
     {
+        public event Action OrbitChanged;
+    
         public Vector2 AttractorCenter => attractor.position;
         public float OrbitRadius => orbitRadius;
 

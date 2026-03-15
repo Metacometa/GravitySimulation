@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8280652758312955313}
   - component: {fileID: 3357921824387116275}
   m_Layer: 0
-  m_Name: OrbitPoint
+  m_Name: OrbitPointView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

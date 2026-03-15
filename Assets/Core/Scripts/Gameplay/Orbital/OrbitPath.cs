@@ -1,18 +1,37 @@
+using System;
 using System.Collections.Generic;
 using GravitySimulator.Math;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital
 {
+    [RequireComponent(typeof(OrbitComponent))]
     public class OrbitPath : MonoBehaviour
     {
-        public IReadOnlyList<Vector2> PathPoints => _pathPoints;
+        public event Action PathUpdated;
 
-        private List<Vector2> _pathPoints = new();
+        public OrbitComponent OrbitComponent { get; private set; }
+        public IReadOnlyList<Vector2> Path => _path;
 
-        public void GenerateOrbitPoints(Vector2 center, float radius, int pointCount)
+        [SerializeField] private int pointCount;
+
+        private List<Vector2> _path = new();
+
+        private void Awake()
         {
-            _pathPoints.Clear();
+            OrbitComponent = GetComponent<OrbitComponent>();
+
+            OrbitComponent.OrbitChanged += RecalculatePath;
+        }
+    
+        private void OnDestroy()
+        {
+            OrbitComponent.OrbitChanged -= RecalculatePath;    
+        }
+
+        private void RecalculatePath()
+        {
+            _path.Clear();
 
             if (pointCount <= 0)
                 return;
@@ -22,8 +41,17 @@ namespace GravitySimulator.Gameplay.Orbital
             for (int i = 0; i < pointCount; ++i)
             {
                 float angleRad = i * angleStep * Mathf.Deg2Rad;         
-                _pathPoints.Add(Geometry2D.PointOnCircle(center, angleRad, radius));
+
+                Vector2 pathPoint = Geometry2D.PointOnCircle(
+                    OrbitComponent.AttractorCenter, 
+                    OrbitComponent.OrbitRadius,
+                    angleRad
+                );
+
+                _path.Add(pathPoint);
             }
+
+            PathUpdated?.Invoke();
         }
     }
 }

@@ -3,52 +3,50 @@ using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital
 {
-    [RequireComponent(typeof(OrbitComponent))]
     [RequireComponent(typeof(OrbitPath))]
     public class OrbitView : MonoBehaviour
     {
-        public OrbitComponent OrbitComponent { get; private set; }   
         public OrbitPath OrbitPath { get; private set; }     
         
         [Header("Component References")]
-        [SerializeField] private Transform orbitParent;
+        [SerializeField] private Transform orbitViewRoot;
 
         [Header("Prefabs")]
-        [SerializeField] private GameObject orbitPointPrefab;
+        [SerializeField] private GameObject orbitPointViewPrefab;
 
-        private List<GameObject> _orbitView = new();
+        private List<GameObject> _orbitPointViews = new();
 
         private void Awake()
         {
-            OrbitComponent = GetComponent<OrbitComponent>();
             OrbitPath = GetComponent<OrbitPath>();
+
+            OrbitPath.PathUpdated += UpdateOrbitView;
         }
 
-        private void Start()
+        private void OnDestroy()
         {
-            UpdateOrbit();
+            OrbitPath.PathUpdated -= UpdateOrbitView;
         }
 
-        public void UpdateOrbit()
+        private void UpdateOrbitView()
         {
-            ResetOrbit();
+            ClearOrbitView();
 
-            foreach (var point in OrbitPath.PathPoints)
+            foreach (var point in OrbitPath.Path)
             {
-                Debug.Log($"[OrbitView] [UpdateOrbit]: point");
-                GameObject pointView = Instantiate(orbitPointPrefab, point, Quaternion.identity, orbitParent);
-                _orbitView.Add(pointView);
+                GameObject pointView = Instantiate(orbitPointViewPrefab, point, Quaternion.identity, orbitViewRoot);
+                _orbitPointViews.Add(pointView);
             }
         }
  
-        private void ResetOrbit()
+        private void ClearOrbitView()
         {
-            foreach (var orbitPoint in _orbitView)
+            foreach (var orbitPoint in _orbitPointViews)
             {
                 Destroy(orbitPoint);    
             }
 
-            _orbitView.Clear();
+            _orbitPointViews.Clear();
         }
     }
 }

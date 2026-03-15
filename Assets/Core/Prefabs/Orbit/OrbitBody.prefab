@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afbd455560a500c43a9de133b20e6a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitParent: {fileID: 1323447170841364150}
-  orbitPointPrefab: {fileID: 1510317622149897247, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
+  orbitViewRoot: {fileID: 1323447170841364150}
+  orbitPointViewPrefab: {fileID: 1510317622149897247, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
 --- !u!1 &3008709242146534230
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323447170841364150}
   m_Layer: 0
-  m_Name: OrbitView
+  m_Name: OrbitViewRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

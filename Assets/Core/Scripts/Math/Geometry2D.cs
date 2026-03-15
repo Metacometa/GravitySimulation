@@ -19,8 +19,8 @@ namespace GravitySimulator.Math
         /// </summary>
         public static Vector2 PointOnCircle(
             Vector2 center,
-            float angleRad,
-            float radius
+            float radius,
+            float angleRad
         )
         {
             return center + UnitCircle(angleRad) * radius;
