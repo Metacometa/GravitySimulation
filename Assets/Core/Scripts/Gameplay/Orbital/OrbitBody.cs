@@ -29,5 +29,11 @@ namespace GravitySimulator.Gameplay.Orbital
         {
             OrbitChanged?.Invoke();
         }
+
+        public void UpdateOrbit()
+        {
+            orbitRadius = ((Vector2)OrbitComponent.transform.position - AttractorCenter).magnitude;
+            OrbitChanged?.Invoke();
+        }
     }
 }

@@ -12,11 +12,13 @@ namespace GravitySimulator.Gameplay.Orbital
         public OrbitComponent OrbitComponent { get; private set; }
         public IReadOnlyList<Vector2> Path => _path;
 
-        [SerializeField] private int pointCount;
+        [SerializeField] private int pointSpacing;
 
         private OrbitBody _orbitBody;
         private List<Vector2> _path = new();
-    
+
+        private float _angleOffset = 0f;
+
         private void OnDestroy()
         {
             _orbitBody.OrbitChanged -= RecalculatePath;    
@@ -35,14 +37,20 @@ namespace GravitySimulator.Gameplay.Orbital
         {
             _path.Clear();
 
-            if (pointCount <= 0)
+            if (pointSpacing <= 0)
                 return;
 
-            float angleStep = 360f / pointCount;
+            int pointCount = Mathf.CeilToInt(
+                Geometry2D.Circumference(_orbitBody.OrbitRadius) / pointSpacing);
 
+            float angleStep = 360f / pointCount;
+            _angleOffset = Mathf.Repeat(
+                _angleOffset + 0.5f * Time.deltaTime,
+                Geometry2D.OneFullTurn()
+            );
             for (int i = 0; i < pointCount; ++i)
             {
-                float angleRad = i * angleStep * Mathf.Deg2Rad;         
+                float angleRad = _angleOffset + i * angleStep * Mathf.Deg2Rad;         
 
                 Vector2 pathPoint = Geometry2D.PointOnCircle(
                     _orbitBody.AttractorCenter, 

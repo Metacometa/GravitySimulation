@@ -911,6 +911,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1512693204}
     m_Modifications:
+    - target: {fileID: 35434560095982127, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
+      propertyPath: onDragEnd.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 35434560095982127, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
+      propertyPath: onClick.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1510317622149897247, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_Name
       value: OrbitPlanet
@@ -927,6 +935,10 @@ PrefabInstance:
       propertyPath: pointCount
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
+      propertyPath: attractor
+      value: 
+      objectReference: {fileID: 5456165952684986655}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.79

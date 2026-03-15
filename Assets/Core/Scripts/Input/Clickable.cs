@@ -8,13 +8,13 @@ namespace GravitySimulator.Input
     [RequireComponent(typeof(Collider2D))]
     public class Clickable : MonoBehaviour
     {
-        [SerializeField] private List<UnityEvent> _actions;
+        [SerializeField] private List<UnityEvent> onClick;
 
         private void OnMouseDown()
         {
-            foreach (var action in _actions)
+            foreach (var onClickEvent in onClick)
             {
-                action?.Invoke();
+                onClickEvent?.Invoke();
             }
         }
     }
