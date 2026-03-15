@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital
 {
-    [RequireComponent(typeof(OrbitComponent))]
     public class OrbitPath : MonoBehaviour
     {
         public event Action PathUpdated;
@@ -15,18 +14,21 @@ namespace GravitySimulator.Gameplay.Orbital
 
         [SerializeField] private int pointCount;
 
+        private OrbitBody _orbitBody;
         private List<Vector2> _path = new();
-
-        private void Awake()
-        {
-            OrbitComponent = GetComponent<OrbitComponent>();
-
-            OrbitComponent.OrbitChanged += RecalculatePath;
-        }
     
         private void OnDestroy()
         {
-            OrbitComponent.OrbitChanged -= RecalculatePath;    
+            _orbitBody.OrbitChanged -= RecalculatePath;    
+        }
+
+        public void Initialize(OrbitComponent orbitComponent)
+        {
+            OrbitComponent = orbitComponent;
+        
+            _orbitBody = OrbitComponent.Body;
+
+            _orbitBody.OrbitChanged += RecalculatePath;
         }
 
         private void RecalculatePath()
@@ -43,8 +45,8 @@ namespace GravitySimulator.Gameplay.Orbital
                 float angleRad = i * angleStep * Mathf.Deg2Rad;         
 
                 Vector2 pathPoint = Geometry2D.PointOnCircle(
-                    OrbitComponent.AttractorCenter, 
-                    OrbitComponent.OrbitRadius,
+                    _orbitBody.AttractorCenter, 
+                    _orbitBody.OrbitRadius,
                     angleRad
                 );
 
