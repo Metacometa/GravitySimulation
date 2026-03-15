@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Gravity.Physics
+namespace GravitySimulator.Physics
 {
     public static class GravityPhysics
     {
@@ -42,7 +42,7 @@ namespace GravitySimulator.Gameplay.Gravity.Physics
             Vector2 dir = attractorPos - bodyPos;
             
             // Softening prevents extreme forces when bodies get very close
-            float softenedSqrRadius = dir.sqrMagnitude + softening;
+            float softenedSqrRadius = dir.sqrMagnitude + softening * softening;
             
             float force = G * (bodyMass * attractorMass / softenedSqrRadius);
             return dir.normalized * force;

@@ -5,6 +5,6 @@ namespace GravitySimulator.Gameplay.Gravity.Infrastructure
 {
     public class GravityBodyRegistry
     {
-        public readonly HashSet<GravityBody2D> GravityBodies = new();
+        public readonly HashSet<GravityBody> GravityBodies = new();
     }
 }

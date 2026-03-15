@@ -1,7 +1,7 @@
 using GravitySimulator.Gameplay.Gravity.Infrastructure;
 using GravitySimulator.Gameplay.Gravity.Config;
 using GravitySimulator.Gameplay.Gravity.Mechanics;
-using GravitySimulator.Gameplay.Gravity.Physics;
+using GravitySimulator.Physics;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +9,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
 {
     [RequireComponent(typeof(GravityComponent))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class GravityBody2D : MonoBehaviour, IMotion
+    public class GravityBody : MonoBehaviour
     {
         public GravityComponent GravityComponent => _gravityComponent;
 
@@ -47,7 +47,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
             _gravityBodyRegistry.GravityBodies.Remove(this);
         }
 
-        public void AddGravitationalForce(GravityBody2D other)
+        public void AddGravitationalForce(GravityBody other)
         {
             Vector2 gravitationalForce = GravityPhysics.GravitationalForceOn(
                 _gravityConfig.G,

@@ -9,7 +9,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
     {
         [Inject] private GravityBodyRegistry _gravityBodyRegistry;
 
-        private readonly List<GravityBody2D> _gravityBodiesBuffer = new();
+        private readonly List<GravityBody> _gravityBodiesBuffer = new();
 
         private void FixedUpdate()
         {

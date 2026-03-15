@@ -1,4 +1,4 @@
-using GravitySimulator.Gameplay.Gravity.Physics;
+using GravitySimulator.Physics;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Gravity.Mechanics
