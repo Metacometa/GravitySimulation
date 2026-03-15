@@ -1,3 +1,4 @@
+using GravitySimulator.Gameplay.Gravity.Infrastructure;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -13,7 +14,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
         private void FixedUpdate()
         {
             _gravityBodiesBuffer.Clear();
-            _gravityBodiesBuffer.AddRange(_gravityBodyRegistry.Bodies);
+            _gravityBodiesBuffer.AddRange(_gravityBodyRegistry.GravityBodies);
 
             foreach (var gravityBody in _gravityBodiesBuffer)
                 gravityBody.ResetForce();
@@ -22,7 +23,8 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
             {
                 for (int j = i + 1; j < _gravityBodiesBuffer.Count; ++j)
                 {
-                    if (_gravityBodiesBuffer[i].GravityBodyType == _gravityBodiesBuffer[j].GravityBodyType)
+                    if (_gravityBodiesBuffer[i].GravityComponent.GravityBodyType == 
+                        _gravityBodiesBuffer[j].GravityComponent.GravityBodyType)
                         continue;
 
                     _gravityBodiesBuffer[i].AddGravitationalForce(_gravityBodiesBuffer[j]);

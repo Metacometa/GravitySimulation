@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Gravity.Mechanics
 {
-    public static class OrbitStabilizer
+    public static class GravityOrbitStabilizer
     {
         /// <summary>
         /// Stabilizes velocity toward circular orbit around an attractor

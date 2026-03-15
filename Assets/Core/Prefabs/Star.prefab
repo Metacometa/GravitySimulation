@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5457245065178757489}
   - component: {fileID: 4048033588890433412}
   - component: {fileID: 7830924801014249642}
-  - component: {fileID: 3823284209465892785}
+  - component: {fileID: 2361132154346447092}
+  - component: {fileID: 1265772768511390668}
   m_Layer: 0
   m_Name: Star
   m_TagString: Untagged
@@ -116,7 +117,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3823284209465892785
+--- !u!114 &2361132154346447092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,11 +126,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 5371975372854146398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9471e42b963a1447b6f46162cea48b6, type: 3}
+  m_Script: {fileID: 11500000, guid: e51e2f0c881856b4289a02ef9ac09944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gravityBodyType: 2
   mass: 10000
+--- !u!114 &1265772768511390668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371975372854146398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15897c331f954d34e90a69a8aaeb9986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   startSpeed: 0
   maxVelocity: 0
   orbitStabilizingFactor: 0

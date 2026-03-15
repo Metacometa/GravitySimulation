@@ -1,3 +1,5 @@
+using GravitySimulator.Gameplay.Gravity.Infrastructure;
+using GravitySimulator.Gameplay.Gravity.Config;
 using GravitySimulator.Gameplay.Gravity.Mechanics;
 using GravitySimulator.Gameplay.Gravity.Physics;
 using UnityEngine;
@@ -5,66 +7,61 @@ using Zenject;
 
 namespace GravitySimulator.Gameplay.Gravity.Simulation
 {
+    [RequireComponent(typeof(GravityComponent))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class GravityBody2D : MonoBehaviour
+    public class GravityBody2D : MonoBehaviour, IMotion
     {
-        public GravityBodyType GravityBodyType => gravityBodyType;
-        public float Mass => mass;
+        public GravityComponent GravityComponent => _gravityComponent;
 
-        [Header("Body")]
-        [SerializeField] private GravityBodyType gravityBodyType;
-
-        [SerializeField, Min(0.0001f)] 
-        private float mass;
-
-        [Header("Movement")]
+        [Header("Motion")]
         [SerializeField] private float startSpeed;
         [SerializeField] private float maxVelocity;
 
         [Header("Orbit Stabilizing")]
-        [SerializeField, Range(0f, 10f)] 
+        [SerializeField, Range(0f, 10f)]
         private float orbitStabilizingFactor;
 
         [Inject] private GravityBodyRegistry _gravityBodyRegistry;
         [Inject] private GravityConfig _gravityConfig;
 
+        private GravityComponent _gravityComponent;
         private Rigidbody2D _rb;
 
         private Vector2 _accumulatedForce;
-        private GravityBody2D _strongestAttractor;
+        private GravityComponent _strongestAttractor;
         private float _strongestGravitationalForce;
 
         private void Awake()
         {
+            _gravityComponent = GetComponent<GravityComponent>();
             _rb = GetComponent<Rigidbody2D>();
-            // _rb.linearVelocity = Random.insideUnitCircle.normalized * startSpeed;
         }
 
         private void OnEnable()
         {
-            _gravityBodyRegistry.Bodies.Add(this);
+            _gravityBodyRegistry.GravityBodies.Add(this);
         }
 
         private void OnDisable()
         {
-            _gravityBodyRegistry.Bodies.Remove(this);
+            _gravityBodyRegistry.GravityBodies.Remove(this);
         }
 
         public void AddGravitationalForce(GravityBody2D other)
         {
             Vector2 gravitationalForce = GravityPhysics.GravitationalForceOn(
-                _gravityConfig.G, 
+                _gravityConfig.G,
                 _gravityConfig.Softening,
                 transform.position,
-                Mass,
+                GravityComponent.Mass,
                 other.transform.position,
-                other.Mass
+                other.GravityComponent.Mass
             );
 
             if (gravitationalForce.magnitude > _strongestGravitationalForce)
             {
                 _strongestGravitationalForce = gravitationalForce.magnitude;
-                _strongestAttractor = other;                
+                _strongestAttractor = other.GravityComponent;
             }
 
             _accumulatedForce += gravitationalForce;
@@ -75,13 +72,13 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
             _rb.linearVelocity = GravityPhysics.IntegrateVelocity(
                 _rb.linearVelocity,
                 _accumulatedForce,
-                Mass,
+                GravityComponent.Mass,
                 Time.fixedDeltaTime
             );
 
             if (_strongestAttractor != null)
             {
-                _rb.linearVelocity = OrbitStabilizer.StabilizeVelocity(
+                _rb.linearVelocity = GravityOrbitStabilizer.StabilizeVelocity(
                     _gravityConfig.G,
                     orbitStabilizingFactor,
                     _rb.linearVelocity,

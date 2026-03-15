@@ -1,8 +1,8 @@
-using GravitySimulator.Gameplay.Gravity.Simulation;
+using GravitySimulator.Gameplay.Gravity.Config;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySimulator.Gameplay.Gravity
+namespace GravitySimulator.Gameplay.Gravity.Infrastructure
 {
     public class GravityInstaller : MonoInstaller
     {
@@ -15,10 +15,6 @@ namespace GravitySimulator.Gameplay.Gravity
 
             Container.Bind<GravityBodyRegistry>()
                 .AsSingle();
-
-            Container.Bind<GravityBody2D>()
-                .FromComponentsInHierarchy()
-                .AsTransient();
         }        
     }
 }
