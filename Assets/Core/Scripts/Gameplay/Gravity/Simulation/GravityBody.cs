@@ -11,7 +11,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
     [RequireComponent(typeof(Rigidbody2D))]
     public class GravityBody : MonoBehaviour
     {
-        public GravityComponent GravityComponent => _gravityComponent;
+        public GravityComponent GravityComponent { get; private set; }
 
         [Header("Motion")]
         [SerializeField] private float startSpeed;
@@ -24,7 +24,6 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
         [Inject] private GravityBodyRegistry _gravityBodyRegistry;
         [Inject] private GravityConfig _gravityConfig;
 
-        private GravityComponent _gravityComponent;
         private Rigidbody2D _rb;
 
         private Vector2 _accumulatedForce;
@@ -33,7 +32,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
 
         private void Awake()
         {
-            _gravityComponent = GetComponent<GravityComponent>();
+            GravityComponent = GetComponent<GravityComponent>();
             _rb = GetComponent<Rigidbody2D>();
         }
 
