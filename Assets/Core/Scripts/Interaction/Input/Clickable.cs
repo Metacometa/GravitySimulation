@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GravitySimulator.Input
+namespace GravitySimulator.Interaction.Input
 {
     [RequireComponent(typeof(Collider2D))]
     public class Clickable : MonoBehaviour
