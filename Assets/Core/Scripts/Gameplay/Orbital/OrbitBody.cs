@@ -1,14 +1,14 @@
 using System;
+using GravitySimulator.Interaction.Drag;
 using UnityEngine;
-using Zenject;
 
 namespace GravitySimulator.Gameplay.Orbital
 {
     public class OrbitBody : MonoBehaviour
     {
-        public event Action OrbitChanged;
-
         public OrbitComponent OrbitComponent { get; private set; }
+
+        public event Action OrbitChanged;
 
         public Vector2 AttractorCenter => attractor.position;
         public float OrbitRadius => orbitRadius;
@@ -17,12 +17,9 @@ namespace GravitySimulator.Gameplay.Orbital
         [SerializeField] private Transform attractor;
         [SerializeField] private float orbitRadius;
 
-        private Rigidbody2D _rb;
-
         public void Initialize(OrbitComponent orbitComponent)
         {
             OrbitComponent = orbitComponent;
-            _rb = OrbitComponent.Rb;
         }
 
         private void Start()
@@ -30,9 +27,9 @@ namespace GravitySimulator.Gameplay.Orbital
             OrbitChanged?.Invoke();
         }
 
-        public void UpdateOrbit()
+        public void RecalculateRadius()
         {
-            orbitRadius = ((Vector2)OrbitComponent.transform.position - AttractorCenter).magnitude;
+            orbitRadius = (OrbitComponent.Position - AttractorCenter).magnitude;
             OrbitChanged?.Invoke();
         }
     }

@@ -25,9 +25,9 @@ Transform:
   m_GameObject: {fileID: 713227399897893514}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.016404152, y: -0.004675351, z: 0.00022499976}
-  m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4805076843795065910}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 2043487456148254982}
   - component: {fileID: 1994696548535901837}
   - component: {fileID: 5961823790396008636}
+  - component: {fileID: 8550378575435717118}
   m_Layer: 0
   m_Name: OrbitFeature
   m_TagString: Untagged
@@ -58,10 +59,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7008641152509975480}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0356612, y: 0.010163806, z: -0.0004891299}
-  m_LocalScale: {x: 2.173913, y: 2.173913, z: 2.173913}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3636979574821601130}
   m_Father: {fileID: 0}
@@ -92,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0761dd6c9a848459e4e46b04af6e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointCount: 30
+  pointSpacing: 1
 --- !u!114 &5961823790396008636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +108,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orbitViewRoot: {fileID: 3636979574821601130}
   orbitPointViewPrefab: {fileID: 1510317622149897247, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
+--- !u!114 &8550378575435717118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008641152509975480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd288c7d4875d2944a40e621597978fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragMove: {fileID: 0}

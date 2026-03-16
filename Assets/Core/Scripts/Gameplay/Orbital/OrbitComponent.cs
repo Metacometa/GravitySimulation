@@ -7,13 +7,17 @@ namespace GravitySimulator.Gameplay.Orbital
     {
         public OrbitBody Body => body;
         public OrbitPath Path => path;
+        public OrbitEditor Editor => editor;
         public OrbitView View => view;
 
-        public Rigidbody2D Rb => _rb;
+        public Vector2 Position => transform.position;
+
+        public Rigidbody2D Rigidbody => _rb;
 
         [Header("Component References")]
         [SerializeField] private OrbitBody body;
         [SerializeField] private OrbitPath path;
+        [SerializeField] private OrbitEditor editor;
         [SerializeField] private OrbitView view;
 
         private Rigidbody2D _rb;
@@ -24,6 +28,7 @@ namespace GravitySimulator.Gameplay.Orbital
 
             body.Initialize(this);
             path.Initialize(this);
+            editor.Initialize(this);
             view.Initialize(this);
         }
     }

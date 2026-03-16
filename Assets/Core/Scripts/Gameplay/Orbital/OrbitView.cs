@@ -25,10 +25,12 @@ namespace GravitySimulator.Gameplay.Orbital
         public void Initialize(OrbitComponent orbitComponent)
         {
             OrbitComponent = orbitComponent;
+            
             _orbitPath = OrbitComponent.Path;
 
             _orbitPath.PathUpdated += UpdateOrbitView;
-    }
+        }
+        
         private void UpdateOrbitView()
         {
             ClearOrbitView();
