@@ -769,6 +769,7 @@ GameObject:
   - component: {fileID: 1791707468}
   - component: {fileID: 1791707467}
   - component: {fileID: 1791707469}
+  - component: {fileID: 1791707470}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -791,6 +792,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1791707469}
+  - {fileID: 1791707470}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -836,6 +838,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityConfig: {fileID: 11400000, guid: ffed43f0e00403e4ba1c790ddeee8614, type: 2}
+--- !u!114 &1791707470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791707466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08bc998f9c5c2c249808c744ca20207a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1937942429
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,34 +925,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1512693204}
     m_Modifications:
-    - target: {fileID: 35434560095982127, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: onDragEnd.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 35434560095982127, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: onClick.Array.data[0].m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1510317622149897247, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_Name
       value: OrbitPlanet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2513186908961866249, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 2513186908961866249, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: orbitRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518358015383968472, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: pointCount
-      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: attractor
       value: 
       objectReference: {fileID: 5456165952684986655}
+    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
+      propertyPath: radiusChangingSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.79

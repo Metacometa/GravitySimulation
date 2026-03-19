@@ -29,8 +29,15 @@ namespace GravitySimulator.Gameplay.Orbital
             _orbitPath = OrbitComponent.Path;
 
             _orbitPath.PathUpdated += UpdateOrbitView;
+
+            DisplayOrbit(false);
         }
         
+        public void DisplayOrbit(bool state)
+        {
+            orbitViewRoot.gameObject.SetActive(state);
+        }
+
         private void UpdateOrbitView()
         {
             ClearOrbitView();

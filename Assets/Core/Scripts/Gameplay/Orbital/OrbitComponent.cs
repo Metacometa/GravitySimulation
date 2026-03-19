@@ -17,6 +17,7 @@ namespace GravitySimulator.Gameplay.Orbital
         [Header("Component References")]
         [SerializeField] private OrbitBody body;
         [SerializeField] private OrbitPath path;
+        [SerializeField] private OrbitMotion motion;
         [SerializeField] private OrbitEditor editor;
         [SerializeField] private OrbitView view;
 
@@ -28,6 +29,7 @@ namespace GravitySimulator.Gameplay.Orbital
 
             body.Initialize(this);
             path.Initialize(this);
+            motion.Initialize(this);
             editor.Initialize(this);
             view.Initialize(this);
         }

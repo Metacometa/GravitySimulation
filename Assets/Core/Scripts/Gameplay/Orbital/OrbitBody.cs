@@ -17,6 +17,9 @@ namespace GravitySimulator.Gameplay.Orbital
         [SerializeField] private Transform attractor;
         [SerializeField] private float orbitRadius;
 
+        [Space]
+        [SerializeField] private float radiusChangingSpeed;
+
         public void Initialize(OrbitComponent orbitComponent)
         {
             OrbitComponent = orbitComponent;
@@ -27,9 +30,10 @@ namespace GravitySimulator.Gameplay.Orbital
             OrbitChanged?.Invoke();
         }
 
-        public void RecalculateRadius()
+        public void ChangeRadius(float radiusDelta)
         {
-            orbitRadius = (OrbitComponent.Position - AttractorCenter).magnitude;
+            // orbitRadius = (OrbitComponent.Position - AttractorCenter).magnitude;
+            orbitRadius += radiusDelta * radiusChangingSpeed;
             OrbitChanged?.Invoke();
         }
     }
