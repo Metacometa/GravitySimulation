@@ -1,36 +1,37 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Math;
-using Mono.Cecil.Cil;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital
+namespace GravitySimulator.Gameplay.Orbital.Mechanics
 {
     public class OrbitPath : MonoBehaviour
     {
         public event Action PathUpdated;
 
-        public OrbitComponent OrbitComponent { get; private set; }
+        public OrbitRoot Root { get; private set; }
+        
         public IReadOnlyList<Vector2> Path => _path;
+        public bool HasPath => _path.Count > 0; 
 
         [SerializeField] private int pointSpacing;
 
-        private OrbitBody _orbitBody;
+        private Orbit _orbit;
         private List<Vector2> _path = new();
 
         private void OnDestroy()
         {
-            _orbitBody.OrbitChanged -= RecalculatePath;    
+            _orbit.OrbitChanged -= RecalculatePath;    
         }
 
-        public void Initialize(OrbitComponent orbitComponent)
+        public void Initialize(OrbitRoot root)
         {
-            OrbitComponent = orbitComponent;
+            Root = root;
         
-            _orbitBody = OrbitComponent.Body;
+            _orbit = Root.Orbit;
 
-            _orbitBody.OrbitChanged += RecalculatePath;
+            _orbit.OrbitChanged += RecalculatePath;
         }
 
         private void RecalculatePath()
@@ -39,7 +40,7 @@ namespace GravitySimulator.Gameplay.Orbital
             if (pointSpacing <= 0) return;
 
             int pointCount = Mathf.CeilToInt(
-                Geometry2D.Circumference(_orbitBody.OrbitRadius) / pointSpacing);
+                Geometry2D.Circumference(_orbit.Radius) / pointSpacing);
 
             float angleStep = 360f / pointCount;
 
@@ -47,8 +48,8 @@ namespace GravitySimulator.Gameplay.Orbital
             {
                 float angleRad = i * angleStep * Mathf.Deg2Rad;         
                 Vector2 pathPoint = Geometry2D.PointOnCircle(
-                    _orbitBody.AttractorCenter, 
-                    _orbitBody.OrbitRadius,
+                    _orbit.AttractorCenter, 
+                    _orbit.Radius,
                     angleRad
                 );
 

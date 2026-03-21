@@ -1,12 +1,16 @@
+using GravitySimulator.Gameplay.Orbital.Interaction;
+using GravitySimulator.Gameplay.Orbital.Mechanics;
+using GravitySimulator.Gameplay.Orbital.View;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital
+namespace GravitySimulator.Gameplay.Orbital.Core
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class OrbitComponent : MonoBehaviour
+    public class OrbitRoot : MonoBehaviour
     {
-        public OrbitBody Body => body;
+        public Orbit Orbit => orbit;
         public OrbitPath Path => path;
+        public OrbitMotion Motion => motion;
         public OrbitEditor Editor => editor;
         public OrbitView View => view;
 
@@ -15,7 +19,7 @@ namespace GravitySimulator.Gameplay.Orbital
         public Rigidbody2D Rigidbody => _rb;
 
         [Header("Component References")]
-        [SerializeField] private OrbitBody body;
+        [SerializeField] private Orbit orbit;
         [SerializeField] private OrbitPath path;
         [SerializeField] private OrbitMotion motion;
         [SerializeField] private OrbitEditor editor;
@@ -27,7 +31,7 @@ namespace GravitySimulator.Gameplay.Orbital
         {
             _rb = GetComponent<Rigidbody2D>();
 
-            body.Initialize(this);
+            orbit.Initialize(this);
             path.Initialize(this);
             motion.Initialize(this);
             editor.Initialize(this);

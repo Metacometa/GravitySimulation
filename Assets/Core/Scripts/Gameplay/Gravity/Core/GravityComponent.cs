@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Gravity
+namespace GravitySimulator.Gameplay.Gravity.Core
 {
     public class GravityComponent : MonoBehaviour
     {

@@ -1,10 +1,7 @@
-using GravitySimulator.Gameplay.Gravity.Simulation;
-using System.Collections.Generic;
+using GravitySimulator.Gameplay.Gravity.Core;
+using GravitySimulator.Infrastructure;
 
 namespace GravitySimulator.Gameplay.Gravity.Infrastructure
 {
-    public class GravityBodyRegistry
-    {
-        public readonly HashSet<GravityBody> GravityBodies = new();
-    }
+    public class GravityBodyRegistry : Registry<GravityBody> {}
 }

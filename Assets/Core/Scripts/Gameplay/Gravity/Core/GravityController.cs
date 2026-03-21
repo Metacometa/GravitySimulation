@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySimulator.Gameplay.Gravity.Simulation
+namespace GravitySimulator.Gameplay.Gravity.Core
 {
     public class GravityController : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
         private void FixedUpdate()
         {
             _gravityBodiesBuffer.Clear();
-            _gravityBodiesBuffer.AddRange(_gravityBodyRegistry.GravityBodies);
+            _gravityBodiesBuffer.AddRange(_gravityBodyRegistry.Items);
 
             foreach (var gravityBody in _gravityBodiesBuffer)
                 gravityBody.ResetForce();

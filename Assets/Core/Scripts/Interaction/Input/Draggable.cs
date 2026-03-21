@@ -10,8 +10,19 @@ namespace GravitySimulator.Interaction.Input
         public event Action Drag;
         public event Action DragEnd;
 
-        private void OnMouseDown() => DragStart?.Invoke();
+        public bool IsDragging { get; private set; }
+
+        private void OnMouseDown() 
+        {
+            IsDragging = true;
+            DragStart?.Invoke();
+        }
+
         private void OnMouseDrag() => Drag?.Invoke();
-        private void OnMouseUp() => DragEnd?.Invoke();
+        private void OnMouseUp() 
+        {
+            IsDragging = false;
+            DragEnd?.Invoke();
+        }
     }
 }

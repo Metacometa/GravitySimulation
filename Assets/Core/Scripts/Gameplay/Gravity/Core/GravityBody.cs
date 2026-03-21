@@ -5,7 +5,7 @@ using GravitySimulator.Physics;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySimulator.Gameplay.Gravity.Simulation
+namespace GravitySimulator.Gameplay.Gravity.Core
 {
     [RequireComponent(typeof(GravityComponent))]
     [RequireComponent(typeof(Rigidbody2D))]
@@ -38,12 +38,12 @@ namespace GravitySimulator.Gameplay.Gravity.Simulation
 
         private void OnEnable()
         {
-            _gravityBodyRegistry.GravityBodies.Add(this);
+            _gravityBodyRegistry.Add(this);
         }
 
         private void OnDisable()
         {
-            _gravityBodyRegistry.GravityBodies.Remove(this);
+            _gravityBodyRegistry.Remove(this);
         }
 
         public void AddGravitationalForce(GravityBody other)

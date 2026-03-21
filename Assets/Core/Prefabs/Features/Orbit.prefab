@@ -42,11 +42,12 @@ GameObject:
   - component: {fileID: 4805076843795065910}
   - component: {fileID: 2043487456148254982}
   - component: {fileID: 1994696548535901837}
+  - component: {fileID: 4888587640405282422}
   - component: {fileID: 5961823790396008636}
   - component: {fileID: 4418743972567234202}
   - component: {fileID: 8550378575435717118}
   m_Layer: 0
-  m_Name: OrbitFeature
+  m_Name: Orbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attractor: {fileID: 0}
-  orbitRadius: 3
+  radius: 0
+  radiusChangingSpeed: 0
 --- !u!114 &1994696548535901837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +97,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointSpacing: 1
+--- !u!114 &4888587640405282422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008641152509975480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7198a6a208d895b458a64b0085951110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathView: {fileID: 5961823790396008636}
 --- !u!114 &5961823790396008636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,8 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afbd455560a500c43a9de133b20e6a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitViewRoot: {fileID: 3636979574821601130}
-  orbitPointViewPrefab: {fileID: 1510317622149897247, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
+  viewRoot: {fileID: 0}
+  pathPointPrefab: {fileID: 0}
 --- !u!114 &4418743972567234202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47f73121bb2dfc418f725da3cd49b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motionSpeed: 1
+  motionSpeed: 3
+  distanceToGetNextPoint: 0.1
 --- !u!114 &8550378575435717118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,4 +150,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd288c7d4875d2944a40e621597978fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragMove: {fileID: 0}
+  draggable: {fileID: 0}

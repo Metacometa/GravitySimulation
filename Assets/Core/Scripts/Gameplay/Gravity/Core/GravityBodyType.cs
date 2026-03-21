@@ -1,4 +1,4 @@
-namespace GravitySimulator.Gameplay.Gravity
+namespace GravitySimulator.Gameplay.Gravity.Core
 {
     public enum GravityBodyType
     {
