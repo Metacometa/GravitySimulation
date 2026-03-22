@@ -34,7 +34,7 @@ namespace GravitySimulator.Interaction.Drag
         
         private void Move()
         {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             mouse.z = transform.position.z;
             transform.position = mouse;
 
