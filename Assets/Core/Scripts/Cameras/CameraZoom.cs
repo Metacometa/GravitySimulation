@@ -14,12 +14,12 @@ namespace GravitySimulator.Cameras
 
         private void Awake()
         {
-            inputReader.CtrlScroll += Zoom;
+            inputReader.CtrlScrolled += Zoom;
         }
 
         private void OnDestroy()
         {
-            inputReader.CtrlScroll -= Zoom;
+            inputReader.CtrlScrolled -= Zoom;
         }
 
         private void Zoom(float value)

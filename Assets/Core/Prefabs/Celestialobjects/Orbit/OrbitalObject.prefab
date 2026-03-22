@@ -283,6 +283,10 @@ PrefabInstance:
       value: Orbit
       objectReference: {fileID: 0}
     - target: {fileID: 8550378575435717118, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
+      propertyPath: dragMove
+      value: 
+      objectReference: {fileID: 3285325212774433197}
+    - target: {fileID: 8550378575435717118, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
       propertyPath: draggable
       value: 
       objectReference: {fileID: 35434560095982127}

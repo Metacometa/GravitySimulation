@@ -30,8 +30,8 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         public void InitializeActions()
         {
-            Root.Editor.EditRadius += ChangeRadius;
-            Root.Editor.EditPosition += UpdateAttractor;
+            Root.Editor.RadiusEdited += ChangeRadius;
+            Root.Editor.PositionEdited += UpdateAttractor;
         }
 
         private void Start()
@@ -41,8 +41,8 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         private void OnDestroy()
         {
-            Root.Editor.EditRadius -= ChangeRadius;     
-            Root.Editor.EditPosition -= UpdateAttractor;       
+            Root.Editor.RadiusEdited -= ChangeRadius;     
+            Root.Editor.PositionEdited -= UpdateAttractor;       
         }
 
         private void ChangeRadius(float radiusDelta)

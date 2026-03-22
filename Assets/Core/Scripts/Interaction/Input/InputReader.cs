@@ -5,8 +5,8 @@ namespace GravitySimulator.Interaction.Input
 {
     public class InputReader : MonoBehaviour
     { 
-        public event Action<float> Scroll;
-        public event Action<float> CtrlScroll;
+        public event Action<float> Scrolled;
+        public event Action<float> CtrlScrolled;
 
         private void Update()
         {
@@ -17,9 +17,9 @@ namespace GravitySimulator.Interaction.Input
             if (scroll != 0)
             {
                 if (ctrl)
-                    CtrlScroll?.Invoke(scroll);
+                    CtrlScrolled?.Invoke(scroll);
                 else
-                    Scroll?.Invoke(scroll);
+                    Scrolled?.Invoke(scroll);
             }
         }
     }

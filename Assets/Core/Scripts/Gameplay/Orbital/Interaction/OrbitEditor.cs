@@ -1,6 +1,7 @@
 using System;
 using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Gameplay.Orbital.View;
+using GravitySimulator.Interaction.Drag;
 using GravitySimulator.Interaction.Input;
 using UnityEngine;
 using Zenject;
@@ -11,15 +12,16 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
     {
         public OrbitRoot Root { get; private set; }     
 
-        public event Action EditStart;
+        public event Action EditStarted;
 
-        public event Action<float> EditRadius;
-        public event Action EditPosition;
+        public event Action<float> RadiusEdited;
+        public event Action PositionEdited;
 
-        public event Action EditEnd;
+        public event Action EditEnded;
 
         [Header("Component References")]
         [SerializeField] private Draggable draggable;
+        [SerializeField] private DragMove dragMove;
 
         [Inject] private InputReader _inputReader;
 
@@ -30,53 +32,47 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
 
         public void InitializeActions()
         {
-            draggable.DragStart += OnEditStart;
+            draggable.DragStarted += OnEditStarted;
 
-            _inputReader.Scroll += OnEditRadius;
+            _inputReader.Scrolled += OnRadiusEdited;
+            dragMove.Moved += OnPositionEdited;
 
-            draggable.DragStart += OnEditPosition;
-            draggable.Drag += OnEditPosition;
-            draggable.DragEnd += OnEditPosition;
-
-            draggable.DragEnd += OnEditEnd;            
+            draggable.DragEnded += OnEditEnded;            
         }
 
 
         private void OnDestroy()
         {
-            draggable.DragStart -= OnEditStart;
+            draggable.DragStarted -= OnEditStarted;
 
-            _inputReader.Scroll -= OnEditRadius;
+            _inputReader.Scrolled -= OnRadiusEdited;
+            dragMove.Moved -= OnPositionEdited;
 
-            draggable.DragStart -= OnEditPosition;
-            draggable.Drag -= OnEditPosition;
-            draggable.DragEnd -= OnEditPosition;
-
-            draggable.DragEnd -= OnEditEnd;
+            draggable.DragEnded -= OnEditEnded;
         }
 
-        private void OnEditStart()
+        private void OnEditStarted()
         {
-            EditStart?.Invoke();
+            EditStarted?.Invoke();
         }
 
-        private void OnEditRadius(float radiusDelta)
+        private void OnRadiusEdited(float radiusDelta)
         {
             if (draggable.IsDragging)
             {
                 float invertedRadiusDelta = -radiusDelta;
-                EditRadius?.Invoke(invertedRadiusDelta);
+                RadiusEdited?.Invoke(invertedRadiusDelta);
             }
         }
 
-        private void OnEditPosition()
+        private void OnPositionEdited()
         {
-            EditPosition?.Invoke();
+            PositionEdited?.Invoke();
         }
 
-        private void OnEditEnd()
+        private void OnEditEnded()
         {
-            EditEnd?.Invoke();
+            EditEnded?.Invoke();
         }
     }
 }

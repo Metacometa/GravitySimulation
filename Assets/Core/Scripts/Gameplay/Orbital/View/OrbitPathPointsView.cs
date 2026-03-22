@@ -33,16 +33,16 @@ namespace GravitySimulator.Gameplay.Orbital.View
         {
             _path.PathUpdated += RebuildPoints;
 
-            _edit.EditStart += ShowOrbit;
-            _edit.EditEnd += HideOrbit;   
+            _edit.EditStarted += ShowOrbit;
+            _edit.EditEnded += HideOrbit;   
         }  
 
         private void OnDestroy()
         {
             _path.PathUpdated -= RebuildPoints;
 
-            _edit.EditStart -= ShowOrbit;
-            _edit.EditEnd -= HideOrbit; 
+            _edit.EditStarted -= ShowOrbit;
+            _edit.EditEnded -= HideOrbit; 
         }
 
         public void ShowOrbit() => SetVisible(true);

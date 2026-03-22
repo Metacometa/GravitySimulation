@@ -20,21 +20,23 @@ namespace GravitySimulator.Interaction.Drag
                 return;
             }
 
-            draggable.Drag += Move;
-            draggable.DragEnd += Move;
+            draggable.DragStarted += OnMove;
+            draggable.Dragged += OnMove;
+            draggable.DragEnded += OnMove;
         }
 
         private void OnDestroy()
         {
             if (draggable == null) return;
 
-            draggable.Drag -= Move;
-            draggable.DragEnd -= Move;
+            draggable.DragStarted -= OnMove;
+            draggable.Dragged -= OnMove;
+            draggable.DragEnded -= OnMove;
         }
         
-        private void Move()
+        private void OnMove()
         {
-            Vector3 mouse = UnityEngine.Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
             mouse.z = transform.position.z;
             transform.position = mouse;
 

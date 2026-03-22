@@ -6,23 +6,23 @@ namespace GravitySimulator.Interaction.Input
     [RequireComponent(typeof(Collider2D))]
     public class Draggable : MonoBehaviour
     {
-        public event Action DragStart;
-        public event Action Drag;
-        public event Action DragEnd;
+        public event Action DragStarted;
+        public event Action Dragged;
+        public event Action DragEnded;
 
         public bool IsDragging { get; private set; }
 
         private void OnMouseDown() 
         {
             IsDragging = true;
-            DragStart?.Invoke();
+            DragStarted?.Invoke();
         }
 
-        private void OnMouseDrag() => Drag?.Invoke();
+        private void OnMouseDrag() => Dragged?.Invoke();
         private void OnMouseUp() 
         {
             IsDragging = false;
-            DragEnd?.Invoke();
+            DragEnded?.Invoke();
         }
     }
 }
