@@ -16,41 +16,46 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
         [Inject] private InputReader _inputReader;
 
         private Orbit _orbit;
-        private OrbitPathView _pathView;
+        private OrbitPathPointsView _pathPointsView;
+        private OrbitPathLineView _pathLineView;
 
         public void Initialize(OrbitRoot root)
         {
             Root = root;
 
             _orbit = Root.Orbit;
-            _pathView = Root.View.PathView;
+            _pathPointsView = Root.View.PathPointsView;
+            _pathLineView = Root.View.PathLineView;
 
             _inputReader.Scroll += EditOrbit;
 
-            draggable.DragStart += _pathView.ShowOrbit;
+            draggable.DragStart += _pathPointsView.ShowOrbit;
+            // draggable.DragStart += _pathLineView.ShowOrbit;
 
             draggable.Drag += _orbit.UpdateAttractor;
 
             draggable.DragEnd += _orbit.UpdateAttractor;
-            draggable.DragEnd += _pathView.HideOrbit;
+            draggable.DragEnd += _pathPointsView.HideOrbit;
+            // draggable.DragStart += _pathLineView.HideOrbit;
+
         }
 
         private void OnDestroy()
         {
             _inputReader.Scroll -= EditOrbit;
 
-            draggable.DragStart -= _pathView.ShowOrbit;
+            // draggable.DragStart -= _pathView.ShowOrbit;
 
             draggable.Drag -= _orbit.UpdateAttractor;
 
             draggable.DragEnd -= _orbit.UpdateAttractor;
-            draggable.DragEnd -= _pathView.HideOrbit;
+            // draggable.DragEnd -= _pathView.HideOrbit;
         }
 
         private void EditOrbit(float radiusDelta)
         {
             if (draggable.IsDragging)
-                _orbit.ChangeRadius(radiusDelta);
+                _orbit.ChangeRadius(-radiusDelta);
         }
     }
 }

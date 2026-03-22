@@ -278,14 +278,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5961823790396008636, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
-      propertyPath: viewRoot
-      value: 
-      objectReference: {fileID: 1323447170841364150}
-    - target: {fileID: 5961823790396008636, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
-      propertyPath: pathPointPrefab
-      value: 
-      objectReference: {fileID: 1510317622149897247, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
     - target: {fileID: 7008641152509975480, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
       propertyPath: m_Name
       value: Orbit
@@ -299,11 +291,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
---- !u!4 &1323447170841364150 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3636979574821601130, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}
-  m_PrefabInstance: {fileID: 2316241743452404188}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2123018057116667718 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4418743972567234202, guid: 7aec164c9a0d6114789dec7d7d2a429f, type: 3}

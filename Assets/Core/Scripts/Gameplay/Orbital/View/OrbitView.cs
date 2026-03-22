@@ -7,16 +7,19 @@ namespace GravitySimulator.Gameplay.Orbital.View
     {
         public OrbitRoot Root { get; private set; }     
 
-        public OrbitPathView PathView => pathView;
-        
+        public OrbitPathPointsView PathPointsView => pathPointsView;
+        public OrbitPathLineView PathLineView => pathLineView;
+
         [Header("Component References")]
-        [SerializeField] private OrbitPathView pathView;
+        [SerializeField] private OrbitPathPointsView pathPointsView;
+        [SerializeField] private OrbitPathLineView pathLineView;
 
         public void Initialize(OrbitRoot root)
         {
             Root = root;
 
-            pathView.Initialize(Root);
+            pathPointsView.Initialize(Root);
+            pathLineView.Initialize(Root);
         }
     }
 }

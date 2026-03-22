@@ -2,13 +2,13 @@ using GravitySimulator.Interaction.Input;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySimulator.Camera
+namespace GravitySimulator.Cameras
 {
     public class CameraZoom : MonoBehaviour
     {
         [SerializeField] private float zoomSpeed;
 
-        [Inject] private UnityEngine.Camera camera;
+        [Inject] private Camera _camera;
 
         [Inject] private InputReader inputReader;
 
@@ -17,9 +17,14 @@ namespace GravitySimulator.Camera
             inputReader.CtrlScroll += Zoom;
         }
 
+        private void OnDestroy()
+        {
+            inputReader.CtrlScroll -= Zoom;
+        }
+
         private void Zoom(float value)
         {
-            camera.orthographicSize += value * zoomSpeed;
+            _camera.orthographicSize += value * zoomSpeed;
         }
     }
 }

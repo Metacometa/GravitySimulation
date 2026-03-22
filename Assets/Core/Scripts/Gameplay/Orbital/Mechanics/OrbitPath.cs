@@ -12,13 +12,13 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         public OrbitRoot Root { get; private set; }
         
-        public IReadOnlyList<Vector2> Path => _path;
-        public bool HasPath => _path.Count > 0; 
+        public IReadOnlyList<Vector2> Points => _points;
+        public bool HasPath => _points.Count > 0; 
 
         [SerializeField] private int pointSpacing;
 
         private Orbit _orbit;
-        private List<Vector2> _path = new();
+        private List<Vector2> _points = new();
 
         private void OnDestroy()
         {
@@ -36,8 +36,9 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         private void RecalculatePath()
         {
-            _path.Clear();
+            _points.Clear();
             if (pointSpacing <= 0) return;
+            if (_orbit.HasAttractor == false) return;
 
             int pointCount = Mathf.CeilToInt(
                 Geometry2D.Circumference(_orbit.Radius) / pointSpacing);
@@ -53,7 +54,7 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
                     angleRad
                 );
 
-                _path.Add(pathPoint);
+                _points.Add(pathPoint);
             }
 
             PathUpdated?.Invoke();
@@ -63,15 +64,15 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         {
             closestIndex = -1;
 
-            if (_path.Count == 0)
+            if (_points.Count == 0)
             {
                 return false;    
             }    
             
             float closestDistance = Mathf.Infinity;
-            for (int i = 0; i < _path.Count; ++i)
+            for (int i = 0; i < _points.Count; ++i)
             {
-                float distance = Vector2.Distance(_path[i], source);
+                float distance = Vector2.Distance(_points[i], source);
                 if (distance < closestDistance)
                 {
                     closestIndex = i;
@@ -86,13 +87,13 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         {
             closestPoint = Vector2.zero;
 
-            if (_path.Count == 0)
+            if (_points.Count == 0)
             {
                 return false;    
             }    
             
             float closestDistance = Mathf.Infinity;
-            foreach (Vector2 point in _path)
+            foreach (Vector2 point in _points)
             {
                 float distance = Vector2.Distance(point, source);
                 if (distance < closestDistance)
@@ -108,11 +109,11 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         public bool TryGetNextOrbitPoint(int index, out Vector2 nextPoint)
         {
             nextPoint = Vector2.zero;
-            if (index >= _path.Count) 
+            if (index >= _points.Count) 
                 return false;
 
-            int nextIndex = (index + 1) % _path.Count;
-            nextPoint = _path[nextIndex];
+            int nextIndex = (index + 1) % _points.Count;
+            nextPoint = _points[nextIndex];
 
             return true;
         }
@@ -120,10 +121,10 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         public bool TryGetNextOrbitPointIndex(int index, out int nextIndex)
         {
             nextIndex = -1;
-            if (index >= _path.Count) 
+            if (index >= _points.Count) 
                 return false;
 
-            nextIndex = (index + 1) % _path.Count;
+            nextIndex = (index + 1) % _points.Count;
 
             return true;
         }        

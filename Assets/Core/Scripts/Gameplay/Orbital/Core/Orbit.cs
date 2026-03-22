@@ -10,6 +10,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         public event Action OrbitChanged;
 
+        public bool HasAttractor => attractor != null;
         public Vector2 AttractorCenter => attractor.transform.position;
         public float Radius => radius;
 

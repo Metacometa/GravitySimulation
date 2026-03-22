@@ -10,17 +10,17 @@ namespace GravitySimulator.Interaction.Input
 
         private void Update()
         {
-            float scroll = UnityEngine.Input.GetAxis("Mouse ScrollWheel");
-
-            if (scroll != 0)
-                Scroll?.Invoke(scroll);
-
+            float scroll = -UnityEngine.Input.GetAxis("Mouse ScrollWheel");
             bool ctrl = UnityEngine.Input.GetKey(KeyCode.LeftControl) ||
                         UnityEngine.Input.GetKey(KeyCode.RightControl);
 
-            if (scroll != 0 &&
-                ctrl)
+            if (scroll != 0)
+            {
+                if (ctrl)
                     CtrlScroll?.Invoke(scroll);
+                else
+                    Scroll?.Invoke(scroll);
+            }
         }
     }
 }
