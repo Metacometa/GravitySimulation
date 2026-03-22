@@ -8,10 +8,10 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 {
     public class OrbitPath : MonoBehaviour
     {
+        public OrbitRoot Root { get; private set; }
+
         public event Action PathUpdated;
 
-        public OrbitRoot Root { get; private set; }
-        
         public IReadOnlyList<Vector2> Points => _points;
         public bool HasPath => _points.Count > 0; 
 
@@ -30,8 +30,11 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
             Root = root;
         
             _orbit = Root.Orbit;
+        }
 
-            _orbit.OrbitChanged += RecalculatePath;
+        public void InitializeActions()
+        {
+            _orbit.OrbitChanged += RecalculatePath;            
         }
 
         private void RecalculatePath()

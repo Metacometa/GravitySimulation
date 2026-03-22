@@ -1,4 +1,5 @@
 using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Gameplay.Orbital.Interaction;
 using GravitySimulator.Gameplay.Orbital.Mechanics;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,23 +17,32 @@ namespace GravitySimulator.Gameplay.Orbital.View
         [SerializeField] private GameObject pointPrefab;
 
         private OrbitPath _path;
+        private OrbitEditor _edit;
 
         private List<GameObject> _pointViews = new();
-
-        private void OnDestroy()
-        {
-            _path.PathUpdated -= RebuildPoints;
-        }
 
         public void Initialize(OrbitRoot root)
         {
             Root = root;
             
             _path = Root.Path;
+            _edit = Root.Editor;
+        }
 
+        public void InitializeActions()
+        {
             _path.PathUpdated += RebuildPoints;
 
-            // SetVisible(false);
+            _edit.EditStart += ShowOrbit;
+            _edit.EditEnd += HideOrbit;   
+        }  
+
+        private void OnDestroy()
+        {
+            _path.PathUpdated -= RebuildPoints;
+
+            _edit.EditStart -= ShowOrbit;
+            _edit.EditEnd -= HideOrbit; 
         }
 
         public void ShowOrbit() => SetVisible(true);

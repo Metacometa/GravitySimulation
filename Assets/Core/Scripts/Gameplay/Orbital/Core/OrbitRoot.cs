@@ -36,6 +36,12 @@ namespace GravitySimulator.Gameplay.Orbital.Core
             motion.Initialize(this);
             editor.Initialize(this);
             view.Initialize(this);
+
+            orbit.InitializeActions();
+            path.InitializeActions();
+            motion.InitializeActions();
+            editor.InitializeActions();
+            view.InitializeActions();
         }
     }
 }

@@ -28,18 +28,30 @@ namespace GravitySimulator.Gameplay.Orbital.Core
             Root = root;
         }
 
+        public void InitializeActions()
+        {
+            Root.Editor.EditRadius += ChangeRadius;
+            Root.Editor.EditPosition += UpdateAttractor;
+        }
+
         private void Start()
         {
             OrbitChanged?.Invoke();
         }
 
-        public void ChangeRadius(float radiusDelta)
+        private void OnDestroy()
+        {
+            Root.Editor.EditRadius -= ChangeRadius;     
+            Root.Editor.EditPosition -= UpdateAttractor;       
+        }
+
+        private void ChangeRadius(float radiusDelta)
         {
             radius += radiusDelta * radiusChangingSpeed;
             OrbitChanged?.Invoke();
         }
 
-        public void UpdateAttractor()
+        private void UpdateAttractor()
         {
             Attractor closestAttractor = null;
             float closestDistance = Mathf.Infinity;

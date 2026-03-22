@@ -14,10 +14,13 @@ namespace GravitySimulator.Gameplay.Orbital.View
         public void Initialize(OrbitRoot root)
         {
             Root = root;
-            
-            Root.Path.PathUpdated += RebuildLineRenderer;
-            // SetVisible(false);
         }
+        
+        public void InitializeActions()
+        {
+            Root.Path.PathUpdated += RebuildLineRenderer;
+            SetVisible(true);   
+        }  
 
         private void OnDestroy()
         {

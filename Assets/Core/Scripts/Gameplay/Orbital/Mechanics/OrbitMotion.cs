@@ -20,7 +20,10 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
             Root = root;
         
             _path = Root.Path;
+        }
 
+        public void InitializeActions()
+        {
             _path.PathUpdated += UpdateTargetPoint;
 
             UpdateTargetPoint();
