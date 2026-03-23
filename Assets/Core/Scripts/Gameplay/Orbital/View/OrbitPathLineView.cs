@@ -9,6 +9,7 @@ namespace GravitySimulator.Gameplay.Orbital.View
     {
         public OrbitRoot Root { get; private set; }     
 
+        [Header("Component References")]
         [SerializeField] private LineRenderer lineRenderer;
     
         public void Initialize(OrbitRoot root)
@@ -19,7 +20,7 @@ namespace GravitySimulator.Gameplay.Orbital.View
         public void InitializeActions()
         {
             Root.Path.PathUpdated += RebuildLineRenderer;
-            SetVisible(true);   
+            SetVisible(false);   
         }  
 
         private void OnDestroy()

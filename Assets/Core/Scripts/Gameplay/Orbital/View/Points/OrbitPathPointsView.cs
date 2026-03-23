@@ -4,18 +4,16 @@ using GravitySimulator.Gameplay.Orbital.Mechanics;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View
+namespace GravitySimulator.Gameplay.Orbital.View.Points
 {
     public class OrbitPathPointsView : MonoBehaviour
     {
         public OrbitRoot Root { get; private set; }     
         
         [Header("Component References")]
-        [SerializeField] private Transform viewRoot;
+        [SerializeField] private OrbitPointsAnimator orbitPointsAnimator;
 
-        [Header("Prefabs")]
-        [SerializeField] private GameObject pointPrefab;
-
+        private Orbit _orbit;
         private OrbitPath _path;
         private OrbitEditor _edit;
 
@@ -25,6 +23,7 @@ namespace GravitySimulator.Gameplay.Orbital.View
         {
             Root = root;
             
+            _orbit = Root.Orbit;
             _path = Root.Path;
             _edit = Root.Editor;
         }
@@ -45,21 +44,27 @@ namespace GravitySimulator.Gameplay.Orbital.View
             _edit.EditEnded -= HideOrbit; 
         }
 
-        public void ShowOrbit() => SetVisible(true);
+        public void ShowOrbit()
+        {
+            if (_orbit.AttractorCenter != null)
+                orbitPointsAnimator.AnimateEditingStart(Root.Orbit.AttractorCenter, _path.Points);
+        }
 
-        public void HideOrbit() => SetVisible(false);
-
-        private void SetVisible(bool state) => viewRoot.gameObject.SetActive(state);
+        public void HideOrbit()
+        {
+            if (_orbit.AttractorCenter != null)
+                orbitPointsAnimator.AnimateEditingEnd(Root.Orbit.AttractorCenter);            
+        }
 
         private void RebuildPoints()
         {
             ClearPoints();
 
-            foreach (var point in _path.Points)
-            {
-                GameObject pointView = Instantiate(pointPrefab, point, Quaternion.identity, viewRoot);
-                _pointViews.Add(pointView);
-            }
+            // foreach (var point in _path.Points)
+            // {
+            //     GameObject pointView = Instantiate(pointPrefab, point, Quaternion.identity, viewRoot);
+            //     _pointViews.Add(pointView);
+            // }
         }
  
         private void ClearPoints()

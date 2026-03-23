@@ -8,10 +8,11 @@ namespace GravitySimulator.Gameplay.Orbital.Core
     {
         public OrbitRoot Root { get; private set; }
 
-        public event Action OrbitChanged;
+        public event Action RadiusChanged;
+        public event Action AttractorChanged;
 
         public bool HasAttractor => attractor != null;
-        public Vector2 AttractorCenter => attractor.transform.position;
+        public Vector2 AttractorCenter => attractor != null ? attractor.transform.position : transform.position;
         public float Radius => radius;
 
         [Header("Orbit Settings")]
@@ -36,7 +37,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         private void Start()
         {
-            OrbitChanged?.Invoke();
+            RadiusChanged?.Invoke();
         }
 
         private void OnDestroy()
@@ -48,7 +49,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
         private void ChangeRadius(float radiusDelta)
         {
             radius += radiusDelta * radiusChangingSpeed;
-            OrbitChanged?.Invoke();
+            RadiusChanged?.Invoke();
         }
 
         private void UpdateAttractor()
@@ -69,7 +70,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
             attractor = closestAttractor;
 
-            OrbitChanged?.Invoke();
+            AttractorChanged?.Invoke();
         }
     }
 }

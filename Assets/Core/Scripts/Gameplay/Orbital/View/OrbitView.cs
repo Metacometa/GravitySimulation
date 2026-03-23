@@ -1,4 +1,5 @@
 using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Gameplay.Orbital.View.Points;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View

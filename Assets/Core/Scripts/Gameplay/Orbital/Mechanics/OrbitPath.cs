@@ -20,11 +20,6 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         private Orbit _orbit;
         private List<Vector2> _points = new();
 
-        private void OnDestroy()
-        {
-            _orbit.OrbitChanged -= RecalculatePath;    
-        }
-
         public void Initialize(OrbitRoot root)
         {
             Root = root;
@@ -34,7 +29,14 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         public void InitializeActions()
         {
-            _orbit.OrbitChanged += RecalculatePath;            
+            _orbit.RadiusChanged += RecalculatePath;            
+            _orbit.AttractorChanged += RecalculatePath;       
+        }
+
+        private void OnDestroy()
+        {
+            _orbit.RadiusChanged -= RecalculatePath;    
+            _orbit.AttractorChanged -= RecalculatePath;     
         }
 
         private void RecalculatePath()
