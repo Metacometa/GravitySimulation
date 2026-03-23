@@ -6,10 +6,11 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 {
     public class OrbitPointsAnimator : MonoBehaviour
     {
+        [Header("Settings")]
         [SerializeField] private float animationSpeed;
 
         [Header("Component References")]
-        [SerializeField] private OrbitPointsPool pointsPool;
+        [SerializeField] private OrbitPointPool pointPool;
 
         private Coroutine _coroutine;
 
@@ -31,10 +32,10 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         private IEnumerator EditingStartAnimation(Vector2 center, IReadOnlyList<Vector2> points)
         {
-            pointsPool.ResizePool(points);
-            pointsPool.SetPosition(center);
+            pointPool.ResizePool(points);
+            pointPool.SetPosition(center);
          
-            IReadOnlyList<GameObject> pool = pointsPool.Pool;
+            IReadOnlyList<GameObject> pool = pointPool.PointsViews;
 
             HashSet<int> reachEndPointsIndexes = new();
 
@@ -62,7 +63,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         private IEnumerator EditingEndAnimation(Vector2 center)
         {
-            IReadOnlyList<GameObject> pool = pointsPool.Pool;
+            IReadOnlyList<GameObject> pool = pointPool.PointsViews;
 
             HashSet<int> reachEndPointsIndexes = new();
 

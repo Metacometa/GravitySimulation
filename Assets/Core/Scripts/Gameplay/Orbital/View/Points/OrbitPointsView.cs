@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Points
 {
-    public class OrbitPathPointsView : MonoBehaviour
+    public class OrbitPointsView : MonoBehaviour
     {
         public OrbitRoot Root { get; private set; }     
         

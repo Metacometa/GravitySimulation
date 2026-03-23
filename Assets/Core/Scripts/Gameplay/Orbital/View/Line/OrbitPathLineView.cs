@@ -1,9 +1,8 @@
 using GravitySimulator.Gameplay.Orbital.Core;
-using GravitySimulator.Gameplay.Orbital.Mechanics;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View
+namespace GravitySimulator.Gameplay.Orbital.View.Line
 {
     public class OrbitPathLineView : MonoBehaviour
     {
