@@ -2,6 +2,7 @@ using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Gameplay.Orbital.Interaction;
 using GravitySimulator.Gameplay.Orbital.Mechanics;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Points
@@ -17,8 +18,6 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         private OrbitPath _path;
         private OrbitEditor _edit;
 
-        private List<GameObject> _pointViews = new();
-
         public void Initialize(OrbitRoot root)
         {
             Root = root;
@@ -30,17 +29,21 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         public void InitializeActions()
         {
-            _path.PathUpdated += RebuildPoints;
-
             _edit.EditStarted += ShowOrbit;
+
+            _orbit.RadiusChanged += RebuildPoints;
+            _orbit.AttractorChanged += MovePoints;
+    
             _edit.EditEnded += HideOrbit;   
         }  
 
         private void OnDestroy()
         {
-            _path.PathUpdated -= RebuildPoints;
-
             _edit.EditStarted -= ShowOrbit;
+
+            _orbit.RadiusChanged -= RebuildPoints;
+            _orbit.AttractorChanged -= MovePoints;
+
             _edit.EditEnded -= HideOrbit; 
         }
 
@@ -56,25 +59,16 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
                 orbitPointsAnimator.AnimateEditingEnd(Root.Orbit.AttractorCenter);            
         }
 
+        private void MovePoints()
+        {
+            if (_orbit.AttractorCenter != null)
+                orbitPointsAnimator.AnimateCenterChangedEditing(_path.Points);
+        }
+
         private void RebuildPoints()
         {
-            ClearPoints();
-
-            // foreach (var point in _path.Points)
-            // {
-            //     GameObject pointView = Instantiate(pointPrefab, point, Quaternion.identity, viewRoot);
-            //     _pointViews.Add(pointView);
-            // }
-        }
- 
-        private void ClearPoints()
-        {
-            foreach (var orbitPoint in _pointViews)
-            {
-                Destroy(orbitPoint);    
-            }
-
-            _pointViews.Clear();
+            if (_orbit.AttractorCenter != null)
+                orbitPointsAnimator.AnimateRadiusEditing(_path.Points);            
         }
     }
 }

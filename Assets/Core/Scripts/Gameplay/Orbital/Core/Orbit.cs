@@ -54,6 +54,8 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         private void UpdateAttractor()
         {
+            Attractor previousAttractor = attractor;
+
             Attractor closestAttractor = null;
             float closestDistance = Mathf.Infinity;
 
@@ -68,8 +70,10 @@ namespace GravitySimulator.Gameplay.Orbital.Core
                 }
             }
 
-            attractor = closestAttractor;
+            if (attractor == closestAttractor)
+                return;
 
+            attractor = closestAttractor;
             AttractorChanged?.Invoke();
         }
     }

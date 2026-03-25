@@ -8,15 +8,15 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 {
     public class OrbitPointPool : MonoBehaviour
     {
-        public IReadOnlyList<GameObject> PointsViews => _pointViews;
+        public IReadOnlyList<OrbitPointView> PointsViews => _pointViews;
 
         [Header("Component References")]
         [SerializeField] private Transform pointsPool;
 
         [Header("Prefabs")]
-        [SerializeField] private GameObject pointPrefab;
+        [SerializeField] private OrbitPointView pointPrefab;
 
-        private readonly List<GameObject> _pointViews = new();
+        private readonly List<OrbitPointView> _pointViews = new();
         
         private int _poolSize = 0;
 
@@ -32,7 +32,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
                 {
                     Vector2 point = targetPoints[i];
                     
-                    GameObject pointView = Instantiate(pointPrefab, point, Quaternion.identity, pointsPool);
+                    OrbitPointView pointView = Instantiate(pointPrefab, point, Quaternion.identity, pointsPool);
                     _pointViews.Add(pointView);
                 }
 
@@ -42,7 +42,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             {
                 for (int i = targetPoints.Count; i < _poolSize; ++i)
                 {
-                    _pointViews[i].SetActive(false);
+                    _pointViews[i].gameObject.SetActive(false);
                 }
 
                 _poolSize = targetPoints.Count;
@@ -51,8 +51,8 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         public void SetPosition(Vector2 position)
         {
-            foreach (GameObject go in _pointViews)
-                go.transform.position = position;
+            foreach (OrbitPointView pointView in _pointViews)
+                pointView.transform.position = position;
         }
     }
 }

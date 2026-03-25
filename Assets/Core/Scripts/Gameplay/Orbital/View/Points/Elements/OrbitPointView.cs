@@ -37,6 +37,20 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             CheckTargetReaching(epsilon);
         }
 
+        public void TickMove(float speed, Vector2 target, float epsilon = DefaultEpsilon)
+        {
+            if (HasTargetReached)
+                return;
+
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                target,
+                speed * Time.deltaTime
+            );
+
+            CheckTargetReaching(epsilon);
+        }
+
         private void CheckTargetReaching(float epsilon)
         {
             HasTargetReached = Vector2.Distance(transform.position, _target) <= epsilon;

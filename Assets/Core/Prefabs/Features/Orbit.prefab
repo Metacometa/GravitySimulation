@@ -182,8 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dec839e9b874a142b40972c3042c244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 5
-  pointsPool: {fileID: 489454398263867647}
+  animationSpeed: 15
+  pointPool: {fileID: 489454398263867647}
 --- !u!114 &489454398263867647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsPool: {fileID: 8661221442815823644}
-  pointPrefab: {fileID: 1510317622149897247, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
+  pointPrefab: {fileID: 3803175395581353674, guid: 526b77f9dd917824faf5c580429004a6, type: 3}
 --- !u!1 &1251278536446133616
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7198a6a208d895b458a64b0085951110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathPointsView: {fileID: 1746687999331121703}
+  pointsView: {fileID: 1746687999331121703}
   pathLineView: {fileID: 3378216284800877182}
 --- !u!114 &4418743972567234202
 MonoBehaviour:

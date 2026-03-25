@@ -40,7 +40,6 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
             draggable.DragEnded += OnEditEnded;            
         }
 
-
         private void OnDestroy()
         {
             draggable.DragStarted -= OnEditStarted;

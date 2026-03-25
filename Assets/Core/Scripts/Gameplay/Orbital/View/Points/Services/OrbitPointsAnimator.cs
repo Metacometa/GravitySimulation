@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Points
@@ -19,85 +20,132 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             if (_coroutine != null)
                 StopCoroutine(_coroutine);
 
-            _coroutine = StartCoroutine(EditingStartAnimation(center, points));
+            pointPool.ResizePool(points);
+            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+
+            for (int i = 0; i < pointViews.Count; ++i)
+            {
+                pointViews[i].SetPosition(center);
+                pointViews[i].SetTarget(points[i]);
+            }
+
+            _coroutine = StartCoroutine(AnimateMotionToTargets());
+        }
+
+        public void AnimateRadiusEditing(IReadOnlyList<Vector2> points)
+        {
+            StopCurrentAnimtion();
+
+            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+
+            for (int i = 0; i < pointViews.Count; ++i)
+            {
+                pointViews[i].SetTarget(points[i]);
+            }
+
+            _coroutine = StartCoroutine(AnimateMotionToTargets());
+        }
+
+        public void AnimateCenterChangedEditing(IReadOnlyList<Vector2> points)
+        {
+            StopCurrentAnimtion();
+
+            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+
+            for (int i = 0; i < pointViews.Count; ++i)
+            {
+                pointViews[i].SetTarget(points[i]);
+            }
+
+            _coroutine = StartCoroutine(AnimateChainMotionToTargets());
         }
 
         public void AnimateEditingEnd(Vector2 center)
         {
+            StopCurrentAnimtion();
+
+            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+
+            for (int i = 0; i < pointViews.Count; ++i)
+            {
+                pointViews[i].SetTarget(center);
+            }
+
+            _coroutine = StartCoroutine(AnimateMotionToTargets());
+        }
+
+        private IEnumerator AnimateMotionToTargets()
+        {
+            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+            HashSet<int> reachEndPointsIndexes = new();
+
+            while (reachEndPointsIndexes.Count < pointViews.Count)
+            {
+                for (int i = 0; i < pointViews.Count; ++i)
+                {
+                    if (reachEndPointsIndexes.Contains(i))
+                        continue;
+
+                    if (pointViews[i].HasTargetReached)
+                    {
+                        reachEndPointsIndexes.Add(i);
+                    }   
+                    else
+                    {
+                        pointViews[i].TickMove(animationSpeed);
+                    }
+                }
+
+                yield return null;
+            }       
+        }      
+
+        private IEnumerator AnimateChainMotionToTargets()
+        {
+            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+            HashSet<int> reachEndPointsIndexes = new();
+
+            while (reachEndPointsIndexes.Count < pointViews.Count)
+            {
+                if (pointViews[0].HasTargetReached)
+                {
+                    reachEndPointsIndexes.Add(0);
+                }   
+                else
+                {
+                    pointViews[0].TickMove(animationSpeed);
+                }
+
+                for (int i = 1; i < pointViews.Count; ++i)
+                {
+                    if (reachEndPointsIndexes.Contains(i))
+                        continue;
+
+                    if (pointViews[i].HasTargetReached)
+                    {
+                        reachEndPointsIndexes.Add(i);
+                    }   
+                    else
+                    {   
+                        if (pointViews[i - 1].HasTargetReached)
+                        {
+                            pointViews[i].TickMove(animationSpeed);  
+                        }
+                        else
+                        {
+                            pointViews[i].TickMove(animationSpeed, pointViews[i - 1].transform.position); 
+                        }
+                    }
+                }
+
+                yield return null;
+            }      
+        }
+
+        private void StopCurrentAnimtion()
+        {
             if (_coroutine != null)
                 StopCoroutine(_coroutine);
-
-            _coroutine = StartCoroutine(EditingEndAnimation(center));
-        }
-
-        private IEnumerator EditingStartAnimation(Vector2 center, IReadOnlyList<Vector2> points)
-        {
-            pointPool.ResizePool(points);
-            pointPool.SetPosition(center);
-         
-            IReadOnlyList<GameObject> pool = pointPool.PointsViews;
-
-            HashSet<int> reachEndPointsIndexes = new();
-
-            while (reachEndPointsIndexes.Count < points.Count)
-            {
-                for (int i = 0; i < points.Count; ++i)
-                {
-                    if (reachEndPointsIndexes.Contains(i))
-                        continue;
-
-                    if (IsReached(pool[i], points[i]))
-                    {
-                        reachEndPointsIndexes.Add(i);
-                        continue;
-                    }
-                    else
-                    {
-                        MovePosition(pool[i], points[i]);
-                    }
-                }
-
-                yield return null;
-            }       
-        }
-
-        private IEnumerator EditingEndAnimation(Vector2 center)
-        {
-            IReadOnlyList<GameObject> pool = pointPool.PointsViews;
-
-            HashSet<int> reachEndPointsIndexes = new();
-
-            while (reachEndPointsIndexes.Count < pool.Count)
-            {
-                for (int i = 0; i < pool.Count; ++i)
-                {
-                    if (reachEndPointsIndexes.Contains(i))
-                        continue;
-
-                    if (IsReached(pool[i], center))
-                    {
-                        reachEndPointsIndexes.Add(i);
-                        continue;
-                    }
-                    else
-                    {
-                        MovePosition(pool[i], center);
-                    }
-                }
-
-                yield return null;
-            }       
-        }        
-
-        private void MovePosition(GameObject gameObject, Vector2 targetPoint)
-        {
-            Vector2 newPosition = Vector2.Lerp(gameObject.transform.position, targetPoint, animationSpeed * Time.deltaTime);
-            gameObject.transform.position = newPosition;
-        }
-
-        private bool IsReached(GameObject gameObject, Vector2 targetPoint, float delta = 0.001f)
-        {
-            return Vector2.Distance(gameObject.transform.position, targetPoint) <= delta;
         }
     }
 }
