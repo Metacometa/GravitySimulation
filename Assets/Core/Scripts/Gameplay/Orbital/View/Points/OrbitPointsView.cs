@@ -50,7 +50,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         public void ShowOrbit()
         {
             if (_orbit.AttractorCenter != null)
-                orbitPointsAnimator.AnimateEditingStart(Root.Orbit.AttractorCenter, _path.Points);
+                orbitPointsAnimator.AnimateEditingStart(Root.Orbit.AttractorCenter, _path.Points.Items);
         }
 
         public void HideOrbit()
@@ -62,13 +62,13 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         private void MovePoints()
         {
             if (_orbit.AttractorCenter != null)
-                orbitPointsAnimator.AnimateCenterChangedEditing(_path.Points);
+                orbitPointsAnimator.AnimateCenterChangedEditing(_path.Points.Items);
         }
 
         private void RebuildPoints()
         {
             if (_orbit.AttractorCenter != null)
-                orbitPointsAnimator.AnimateRadiusEditing(_path.Points);            
+                orbitPointsAnimator.AnimateRadiusEditing(_path.Points.Items);            
         }
     }
 }

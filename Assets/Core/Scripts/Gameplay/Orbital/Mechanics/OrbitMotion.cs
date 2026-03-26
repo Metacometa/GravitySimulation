@@ -40,11 +40,9 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
             float distance = Vector2.Distance(Root.Position, _path.Points[_targetPointIndex]);
             
-            if (distance < distanceToGetNextPoint &&
-                _path.TryGetNextOrbitPointIndex(_targetPointIndex, out int nextIndex))
+            if (distance < distanceToGetNextPoint)
             {
-                // OrbitComponent.Rigidbody.linearVelocity = Vector2.zero;
-                _targetPointIndex = nextIndex;
+                _targetPointIndex = _path.Points.GetNextIndex(_targetPointIndex);
             }
 
             Move(_path.Points[_targetPointIndex]);  
@@ -55,8 +53,6 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
             Vector2 dir = (target - Root.Position).normalized;
 
             Root.Rigidbody.linearVelocity = dir * motionSpeed;
-
-            // OrbitComponent.Rigidbody.AddForce(dir * motionSpeed);
         }
     
         private void UpdateTargetPoint()

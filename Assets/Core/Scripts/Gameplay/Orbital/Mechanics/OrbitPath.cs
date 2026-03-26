@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Infrastructure.Collections;
 using GravitySimulator.Math;
 using UnityEngine;
 
@@ -12,13 +13,13 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         public event Action PathUpdated;
 
-        public IReadOnlyList<Vector2> Points => _points;
+        public CircularList<Vector2> Points => _points;
         public bool HasPath => _points.Count > 0; 
 
         [SerializeField] private int pointSpacing;
 
         private Orbit _orbit;
-        private List<Vector2> _points = new();
+        private CircularList<Vector2> _points = new();
 
         public void Initialize(OrbitRoot root)
         {
@@ -86,52 +87,6 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
             }
 
             return true;
-        }
-
-        public bool TryGetClosestPoint(Vector2 source, out Vector2 closestPoint)
-        {
-            closestPoint = Vector2.zero;
-
-            if (_points.Count == 0)
-            {
-                return false;    
-            }    
-            
-            float closestDistance = Mathf.Infinity;
-            foreach (Vector2 point in _points)
-            {
-                float distance = Vector2.Distance(point, source);
-                if (distance < closestDistance)
-                {
-                    closestPoint = point;
-                    closestDistance = distance;
-                }
-            }
-
-            return true;
-        }
-    
-        public bool TryGetNextOrbitPoint(int index, out Vector2 nextPoint)
-        {
-            nextPoint = Vector2.zero;
-            if (index >= _points.Count) 
-                return false;
-
-            int nextIndex = (index + 1) % _points.Count;
-            nextPoint = _points[nextIndex];
-
-            return true;
-        }
-
-        public bool TryGetNextOrbitPointIndex(int index, out int nextIndex)
-        {
-            nextIndex = -1;
-            if (index >= _points.Count) 
-                return false;
-
-            nextIndex = (index + 1) % _points.Count;
-
-            return true;
-        }        
+        } 
     }
 }

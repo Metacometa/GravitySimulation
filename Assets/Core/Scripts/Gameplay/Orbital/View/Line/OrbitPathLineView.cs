@@ -35,7 +35,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Line
 
         private void RebuildLineRenderer()
         {
-            IReadOnlyCollection<Vector2> points = Root.Path.Points;
+            IReadOnlyCollection<Vector2> points = Root.Path.Points.Items;
             lineRenderer.positionCount = points.Count;
 
             int i = 0;
