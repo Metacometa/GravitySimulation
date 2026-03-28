@@ -1,13 +1,14 @@
 using System;
+using GravitySimulator.Gameplay.Attraction;
+using GravitySimulator.Gameplay.Attraction.Infrastructure;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 using Zenject;
 
 namespace GravitySimulator.Gameplay.Orbital.Core
 {
-    public class Orbit : MonoBehaviour
+    public class Orbit : ComposableChild<OrbitRoot>
     {
-        public OrbitRoot Root { get; private set; }
-
         public event Action RadiusChanged;
         public event Action AttractorChanged;
 
@@ -24,15 +25,15 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         [Inject] private AttractorRegistry _attractorRegistry;
 
-        public void Initialize(OrbitRoot root)
-        {
-            Root = root;
-        }
-
-        public void InitializeActions()
+        public override void Bind()
         {
             Root.Editor.RadiusEdited += ChangeRadius;
             Root.Editor.PositionEdited += UpdateAttractor;
+        }
+
+        public override void Activate()
+        {
+            UpdateAttractor();
         }
 
         private void Start()

@@ -1,17 +1,21 @@
+using GravitySimulator.Gameplay.Attraction.Infrastructure;
 using UnityEngine;
 using Zenject;
 
-public class Attractor : MonoBehaviour
+namespace GravitySimulator.Gameplay.Attraction
 {
-    [Inject] private AttractorRegistry _attractorRegistry;
-
-    private void Awake()
+    public class Attractor : MonoBehaviour
     {
-        _attractorRegistry.Add(this);
-    }
+        [Inject] private AttractorRegistry _attractorRegistry;
 
-    private void OnDestroy()
-    {
-        _attractorRegistry.Remove(this);
+        private void Awake()
+        {
+            _attractorRegistry.Add(this);
+        }
+
+        private void OnDestroy()
+        {
+            _attractorRegistry.Remove(this);
+        }
     }
 }

@@ -1,12 +1,11 @@
 using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.Mechanics
 {
-    public class OrbitMotion : MonoBehaviour
+    public class OrbitMotion : ComposableChild<OrbitRoot>
     {
-        public OrbitRoot Root { get; private set; }
-
         [SerializeField] private float motionSpeed;
         [SerializeField] private float distanceToGetNextPoint;
 
@@ -15,17 +14,20 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         // private Vector2 _targetPoint;
         private int _targetPointIndex;
 
-        public void Initialize(OrbitRoot root)
+        public override void Initialize(OrbitRoot root)
         {
-            Root = root;
+            base.Initialize(root);
         
             _path = Root.Path;
         }
 
-        public void InitializeActions()
+        public override void Bind()
         {
             _path.PathUpdated += UpdateTargetPoint;
+        }
 
+        public override void Activate()
+        {
             UpdateTargetPoint();
         }
 
@@ -36,7 +38,9 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         private void FixedUpdate()
         {
-            if (!_path.HasPath) return;
+            if (_path == null || 
+                _path.HasPath == false) 
+                return;
 
             float distance = Vector2.Distance(Root.Position, _path.Points[_targetPointIndex]);
             

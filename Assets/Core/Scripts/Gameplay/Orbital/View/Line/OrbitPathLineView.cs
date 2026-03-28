@@ -1,26 +1,24 @@
 using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Line
 {
-    public class OrbitPathLineView : MonoBehaviour
+    public class OrbitPathLineView : ComposableChild<OrbitRoot>
     {
-        public OrbitRoot Root { get; private set; }     
-
         [Header("Component References")]
         [SerializeField] private LineRenderer lineRenderer;
-    
-        public void Initialize(OrbitRoot root)
-        {
-            Root = root;
-        }
         
-        public void InitializeActions()
+        public override void Bind()
         {
             Root.Path.PathUpdated += RebuildLineRenderer;
+        }
+
+        public override void Activate()
+        {
             SetVisible(false);   
-        }  
+        }
 
         private void OnDestroy()
         {

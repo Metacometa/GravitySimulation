@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Infrastructure.Collections;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using GravitySimulator.Math;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.Mechanics
 {
-    public class OrbitPath : MonoBehaviour
+    public class OrbitPath : ComposableChild<OrbitRoot>
     {
-        public OrbitRoot Root { get; private set; }
-
         public event Action PathUpdated;
 
         public CircularList<Vector2> Points => _points;
@@ -21,14 +20,14 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
         private Orbit _orbit;
         private CircularList<Vector2> _points = new();
 
-        public void Initialize(OrbitRoot root)
+        public override void Initialize(OrbitRoot root)
         {
-            Root = root;
+            base.Initialize(root);
         
             _orbit = Root.Orbit;
         }
 
-        public void InitializeActions()
+        public override void Bind()
         {
             _orbit.RadiusChanged += RecalculatePath;            
             _orbit.AttractorChanged += RecalculatePath;       

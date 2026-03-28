@@ -1,14 +1,12 @@
-using GravitySimulator.Gameplay.Orbital.Core;
-using GravitySimulator.Gameplay.Orbital.Interaction;
-using GravitySimulator.Gameplay.Orbital.Mechanics;
 using System.Collections.Generic;
+using GravitySimulator.Infrastructure.Collections;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Points
 {
     public class OrbitPointPool : MonoBehaviour
     {
-        public IReadOnlyList<OrbitPointView> PointsViews => _pointViews;
+        public CircularList<OrbitPointView> PointsViews => _pointViews;
 
         [Header("Component References")]
         [SerializeField] private Transform pointsPool;
@@ -16,7 +14,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         [Header("Prefabs")]
         [SerializeField] private OrbitPointView pointPrefab;
 
-        private readonly List<OrbitPointView> _pointViews = new();
+        private readonly CircularList<OrbitPointView> _pointViews = new();
         
         private int _poolSize = 0;
 
@@ -42,7 +40,8 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             {
                 for (int i = targetPoints.Count; i < _poolSize; ++i)
                 {
-                    _pointViews[i].gameObject.SetActive(false);
+                    _pointViews.Remove(_pointViews[i]);
+                    // _pointViews[i].gameObject.SetActive(false);
                 }
 
                 _poolSize = targetPoints.Count;
@@ -51,8 +50,8 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         public void SetPosition(Vector2 position)
         {
-            foreach (OrbitPointView pointView in _pointViews)
-                pointView.transform.position = position;
+            foreach (OrbitPointView pointView in _pointViews.Items)
+                pointView.SetPosition(position);
         }
     }
 }

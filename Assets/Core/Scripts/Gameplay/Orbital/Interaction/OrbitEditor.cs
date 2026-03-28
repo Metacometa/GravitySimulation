@@ -1,6 +1,7 @@
 using System;
 using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Gameplay.Orbital.View;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using GravitySimulator.Interaction.Drag;
 using GravitySimulator.Interaction.Input;
 using UnityEngine;
@@ -8,10 +9,8 @@ using Zenject;
 
 namespace GravitySimulator.Gameplay.Orbital.Interaction
 {
-    public class OrbitEditor : MonoBehaviour
+    public class OrbitEditor : ComposableChild<OrbitRoot>
     {
-        public OrbitRoot Root { get; private set; }     
-
         public event Action EditStarted;
 
         public event Action<float> RadiusEdited;
@@ -19,18 +18,15 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
 
         public event Action EditEnded;
 
+        public bool IsEditing = false;
+
         [Header("Component References")]
         [SerializeField] private Draggable draggable;
         [SerializeField] private DragMove dragMove;
 
         [Inject] private InputReader _inputReader;
 
-        public void Initialize(OrbitRoot root)
-        {
-            Root = root;
-        }
-
-        public void InitializeActions()
+        public override void Bind()
         {
             draggable.DragStarted += OnEditStarted;
 
@@ -53,6 +49,7 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
         private void OnEditStarted()
         {
             EditStarted?.Invoke();
+            IsEditing = true;
         }
 
         private void OnRadiusEdited(float radiusDelta)
@@ -72,6 +69,7 @@ namespace GravitySimulator.Gameplay.Orbital.Interaction
         private void OnEditEnded()
         {
             EditEnded?.Invoke();
+            IsEditing = false;
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using GravitySimulator.Gameplay.Orbital.View.Points;
 using UnityEngine;
 
 namespace GravitySimulator.Math
@@ -41,5 +43,46 @@ namespace GravitySimulator.Math
         {
             return 2 * Mathf.PI * radius;       
         }
+
+        public static bool TryGetClosestIndex(IReadOnlyList<Vector2> vectors, Vector2 source, out int closestIndex)
+        {
+            closestIndex = 0;
+            float closestDistance = Mathf.Infinity;
+
+            if (vectors.Count <= 0) return false;
+
+            for (int i = 0; i < vectors.Count; ++i)
+            {
+                float distance = Vector2.Distance(vectors[i], source);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestIndex = i;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool TryGetClosestIndex(IReadOnlyList<OrbitPointView> vectors, Vector2 source, out int closestIndex)
+        {
+            closestIndex = 0;
+            float closestDistance = Mathf.Infinity;
+
+            if (vectors.Count <= 0) return false;
+
+            for (int i = 0; i < vectors.Count; ++i)
+            {
+                float distance = Vector2.Distance(vectors[i].Position, source);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestIndex = i;
+                }
+            }
+
+            return true;
+        }
+
     }
 }

@@ -1,30 +1,35 @@
 using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Gameplay.Orbital.View.Line;
 using GravitySimulator.Gameplay.Orbital.View.Points;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View
 {
-    public class OrbitView : MonoBehaviour
+    public class OrbitView : ComposableChild<OrbitRoot>
     {
-        public OrbitRoot Root { get; private set; }     
-
         [Header("Component References")]
         [SerializeField] private OrbitPointsView pointsView;
         [SerializeField] private OrbitPathLineView pathLineView;
 
-        public void Initialize(OrbitRoot root)
+        public override void Initialize(OrbitRoot root)
         {
-            Root = root;
+            base.Initialize(root);
 
             pointsView.Initialize(Root);
             pathLineView.Initialize(Root);
         }
 
-        public void InitializeActions()
+        public override void Bind()
         {
-            pointsView.InitializeActions();
-            pathLineView.InitializeActions();
+            pointsView.Bind();
+            pathLineView.Bind();
+        }
+
+        public override void Activate()
+        {
+            pointsView.Activate();
+            pathLineView.Activate();
         }
     }
 }

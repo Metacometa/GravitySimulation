@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using GravitySimulator.Infrastructure.Collections;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Points
@@ -15,68 +16,67 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         private Coroutine _coroutine;
 
-        public void AnimateEditingStart(Vector2 center, IReadOnlyList<Vector2> points)
+        public void AnimateEditingStart(Vector2 center, CircularList<Vector2> targets)
         {
             if (_coroutine != null)
                 StopCoroutine(_coroutine);
 
-            pointPool.ResizePool(points);
-            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+            pointPool.ResizePool(targets.Items);
+            CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
 
             for (int i = 0; i < pointViews.Count; ++i)
             {
+                pointViews[i].ClearTargets();
                 pointViews[i].SetPosition(center);
-                pointViews[i].SetTarget(points[i]);
+                pointViews[i].AddTarget(targets[i]);
             }
 
-            _coroutine = StartCoroutine(AnimateMotionToTargets());
+            _coroutine = StartCoroutine(AnimateMotionToTargets(pointViews));
         }
 
-        public void AnimateRadiusEditing(IReadOnlyList<Vector2> points)
+        public void AnimateRadiusEditing(IReadOnlyList<Vector2> targets)
         {
-            StopCurrentAnimtion();
+            StopCurrentAnimation();
 
-            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+            CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
 
             for (int i = 0; i < pointViews.Count; ++i)
             {
-                pointViews[i].SetTarget(points[i]);
+                pointViews[i].ClearTargets();
+                pointViews[i].AddTarget(targets[i]);
             }
 
-            _coroutine = StartCoroutine(AnimateMotionToTargets());
+            _coroutine = StartCoroutine(AnimateMotionToTargets(pointViews));
         }
 
-        public void AnimateCenterChangedEditing(IReadOnlyList<Vector2> points)
+        public void AnimateCenterChangedEditing(Vector2 center, CircularList<Vector2> targets)
         {
-            StopCurrentAnimtion();
+            StopCurrentAnimation();
 
-            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+            pointPool.ResizePool(targets.Items);
+            // OrbitPointMatcher.MatchPointsToPositions(center, pointPool.PointsViews, targets);
+            OrbitPointMatcher.MatchPointsToPositions(center, pointPool.PointsViews, targets);
 
-            for (int i = 0; i < pointViews.Count; ++i)
-            {
-                pointViews[i].SetTarget(points[i]);
-            }
-
-            _coroutine = StartCoroutine(AnimateChainMotionToTargets());
+            _coroutine = StartCoroutine(AnimateMotionToTargets(pointPool.PointsViews));
         }
 
         public void AnimateEditingEnd(Vector2 center)
         {
-            StopCurrentAnimtion();
+            StopCurrentAnimation();
 
-            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
+            CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
 
             for (int i = 0; i < pointViews.Count; ++i)
             {
-                pointViews[i].SetTarget(center);
+                pointViews[i].ClearTargets();
+                pointViews[i].AddTarget(center);
             }
 
-            _coroutine = StartCoroutine(AnimateMotionToTargets());
+            _coroutine = StartCoroutine(AnimateMotionToTargets(pointViews));
         }
 
-        private IEnumerator AnimateMotionToTargets()
+        private IEnumerator AnimateMotionToTargets(CircularList<OrbitPointView> pointViews)
         {
-            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
             HashSet<int> reachEndPointsIndexes = new();
 
             while (reachEndPointsIndexes.Count < pointViews.Count)
@@ -100,49 +100,31 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             }       
         }      
 
-        private IEnumerator AnimateChainMotionToTargets()
-        {
-            IReadOnlyList<OrbitPointView> pointViews = pointPool.PointsViews;
-            HashSet<int> reachEndPointsIndexes = new();
+        // private IEnumerator AnimateChainMotionToTargets(CircularList<OrbitPointView> pointViews)
+        // {
+        //     HashSet<int> reachEndPointsIndexes = new();
 
-            while (reachEndPointsIndexes.Count < pointViews.Count)
-            {
-                if (pointViews[0].HasTargetReached)
-                {
-                    reachEndPointsIndexes.Add(0);
-                }   
-                else
-                {
-                    pointViews[0].TickMove(animationSpeed);
-                }
+        //     while (reachEndPointsIndexes.Count < pointViews.Count)
+        //     {
+        //         for (int i = 0; i < pointViews.Count; ++i)
+        //         {
+        //             if (reachEndPointsIndexes.Contains(i))
+        //                 continue;
 
-                for (int i = 1; i < pointViews.Count; ++i)
-                {
-                    if (reachEndPointsIndexes.Contains(i))
-                        continue;
+        //             if (pointViews[i].HasTargetReached)
+        //             {
+        //                 reachEndPointsIndexes.Add(i);
+        //                 continue;
+        //             }   
 
-                    if (pointViews[i].HasTargetReached)
-                    {
-                        reachEndPointsIndexes.Add(i);
-                    }   
-                    else
-                    {   
-                        if (pointViews[i - 1].HasTargetReached)
-                        {
-                            pointViews[i].TickMove(animationSpeed);  
-                        }
-                        else
-                        {
-                            pointViews[i].TickMove(animationSpeed, pointViews[i - 1].transform.position); 
-                        }
-                    }
-                }
+        //             pointViews[i].TickMove(animationSpeed);   
+        //         }
 
-                yield return null;
-            }      
-        }
+        //         yield return null;
+        //     }      
+        // }
 
-        private void StopCurrentAnimtion()
+        private void StopCurrentAnimation()
         {
             if (_coroutine != null)
                 StopCoroutine(_coroutine);

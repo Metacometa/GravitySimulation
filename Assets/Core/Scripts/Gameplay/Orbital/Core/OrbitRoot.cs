@@ -1,12 +1,13 @@
 using GravitySimulator.Gameplay.Orbital.Interaction;
 using GravitySimulator.Gameplay.Orbital.Mechanics;
 using GravitySimulator.Gameplay.Orbital.View;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.Core
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class OrbitRoot : MonoBehaviour
+    public class OrbitRoot : ComposableRoot
     {
         public Orbit Orbit => orbit;
         public OrbitPath Path => path;
@@ -27,7 +28,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         private Rigidbody2D _rb;
 
-        private void Awake()
+        public override void Initialize()
         {
             _rb = GetComponent<Rigidbody2D>();
 
@@ -36,12 +37,24 @@ namespace GravitySimulator.Gameplay.Orbital.Core
             motion.Initialize(this);
             editor.Initialize(this);
             view.Initialize(this);
+        }
+        
+        public override void Bind()
+        {
+            orbit.Bind();
+            path.Bind();
+            motion.Bind();
+            editor.Bind();
+            view.Bind();
+        }
 
-            orbit.InitializeActions();
-            path.InitializeActions();
-            motion.InitializeActions();
-            editor.InitializeActions();
-            view.InitializeActions();
+        public override void Activate()
+        {
+            orbit.Activate();
+            path.Activate();
+            motion.Activate();
+            editor.Activate();
+            view.Activate();
         }
     }
 }

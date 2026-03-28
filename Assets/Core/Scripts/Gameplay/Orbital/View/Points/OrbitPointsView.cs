@@ -1,16 +1,13 @@
 using GravitySimulator.Gameplay.Orbital.Core;
 using GravitySimulator.Gameplay.Orbital.Interaction;
 using GravitySimulator.Gameplay.Orbital.Mechanics;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
+using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.View.Points
 {
-    public class OrbitPointsView : MonoBehaviour
-    {
-        public OrbitRoot Root { get; private set; }     
-        
+    public class OrbitPointsView : ComposableChild<OrbitRoot>
+    {        
         [Header("Component References")]
         [SerializeField] private OrbitPointsAnimator orbitPointsAnimator;
 
@@ -18,16 +15,16 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         private OrbitPath _path;
         private OrbitEditor _edit;
 
-        public void Initialize(OrbitRoot root)
+        public override void Initialize(OrbitRoot root)
         {
-            Root = root;
+            base.Initialize(root);
             
             _orbit = Root.Orbit;
             _path = Root.Path;
             _edit = Root.Editor;
         }
 
-        public void InitializeActions()
+        public override void Bind()
         {
             _edit.EditStarted += ShowOrbit;
 
@@ -50,7 +47,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         public void ShowOrbit()
         {
             if (_orbit.AttractorCenter != null)
-                orbitPointsAnimator.AnimateEditingStart(Root.Orbit.AttractorCenter, _path.Points.Items);
+                orbitPointsAnimator.AnimateEditingStart(Root.Orbit.AttractorCenter, _path.Points);
         }
 
         public void HideOrbit()
@@ -61,13 +58,15 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         private void MovePoints()
         {
-            if (_orbit.AttractorCenter != null)
-                orbitPointsAnimator.AnimateCenterChangedEditing(_path.Points.Items);
+            if (_edit.IsEditing == true &&
+                _orbit.AttractorCenter != null)
+                orbitPointsAnimator.AnimateCenterChangedEditing(Root.Orbit.AttractorCenter, _path.Points);
         }
 
         private void RebuildPoints()
         {
-            if (_orbit.AttractorCenter != null)
+            if (_edit.IsEditing == true &&
+                _orbit.AttractorCenter != null)
                 orbitPointsAnimator.AnimateRadiusEditing(_path.Points.Items);            
         }
     }
