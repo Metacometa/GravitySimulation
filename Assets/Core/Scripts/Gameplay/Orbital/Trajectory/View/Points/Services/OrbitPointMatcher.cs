@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GravitySimulator.Infrastructure.Collections;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View.Points
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
 {
     public class OrbitPointMatcher : MonoBehaviour
     {

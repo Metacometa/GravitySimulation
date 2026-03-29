@@ -1,16 +1,16 @@
 using System;
 using GravitySimulator.Gameplay.Attraction;
 using GravitySimulator.Gameplay.Attraction.Infrastructure;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Infrastructure;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySimulator.Gameplay.Orbital.Core
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 {
     public class Orbit : ComposableChild<OrbitRoot>
     {
-        public event Action RadiusChanged;
-        public event Action AttractorChanged;
+        public event Action<OrbitChangeType> Changed;
 
         public bool HasAttractor => attractor != null;
         public Vector2 AttractorCenter => attractor != null ? attractor.transform.position : transform.position;
@@ -38,7 +38,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
         private void Start()
         {
-            RadiusChanged?.Invoke();
+            Changed?.Invoke(OrbitChangeType.Radius);
         }
 
         private void OnDestroy()
@@ -50,7 +50,8 @@ namespace GravitySimulator.Gameplay.Orbital.Core
         private void ChangeRadius(float radiusDelta)
         {
             radius += radiusDelta * radiusChangingSpeed;
-            RadiusChanged?.Invoke();
+
+            Changed?.Invoke(OrbitChangeType.Radius);
         }
 
         private void UpdateAttractor()
@@ -75,7 +76,8 @@ namespace GravitySimulator.Gameplay.Orbital.Core
                 return;
 
             attractor = closestAttractor;
-            AttractorChanged?.Invoke();
+
+            Changed?.Invoke(OrbitChangeType.Attractor);
         }
     }
 }

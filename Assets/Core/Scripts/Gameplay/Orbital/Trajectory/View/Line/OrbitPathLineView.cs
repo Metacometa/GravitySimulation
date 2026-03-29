@@ -1,9 +1,10 @@
-using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Infrastructure;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View.Line
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Line
 {
     public class OrbitPathLineView : ComposableChild<OrbitRoot>
     {
@@ -12,7 +13,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Line
         
         public override void Bind()
         {
-            Root.Path.PathUpdated += RebuildLineRenderer;
+            Root.Path.Updated += RebuildLineRenderer;
         }
 
         public override void Activate()
@@ -22,7 +23,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Line
 
         private void OnDestroy()
         {
-            Root.Path.PathUpdated -= RebuildLineRenderer;
+            Root.Path.Updated -= RebuildLineRenderer;
         }
 
         public void ShowOrbit() => SetVisible(true);
@@ -31,7 +32,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Line
 
         private void SetVisible(bool state) => lineRenderer.enabled = state;
 
-        private void RebuildLineRenderer()
+        private void RebuildLineRenderer(OrbitPathUpdateType orbitPathUpdateType)
         {
             IReadOnlyCollection<Vector2> points = Root.Path.Points.Items;
             lineRenderer.positionCount = points.Count;

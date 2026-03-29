@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using GravitySimulator.Infrastructure.Collections;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View.Points
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
 {
     public class OrbitPointsAnimator : MonoBehaviour
     {
@@ -18,12 +18,10 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
 
         public void AnimateEditingStart(Vector2 center, CircularList<Vector2> targets)
         {
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
-
+            StopCurrentAnimation();
             pointPool.ResizePool(targets.Items);
-            CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
 
+            CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
             for (int i = 0; i < pointViews.Count; ++i)
             {
                 pointViews[i].ClearTargets();
@@ -34,12 +32,12 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             _coroutine = StartCoroutine(AnimateMotionToTargets(pointViews));
         }
 
-        public void AnimateRadiusEditing(IReadOnlyList<Vector2> targets)
+        public void AnimateRadiusEditing(CircularList<Vector2> targets)
         {
             StopCurrentAnimation();
+            pointPool.ResizePool(targets.Items);
 
             CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
-
             for (int i = 0; i < pointViews.Count; ++i)
             {
                 pointViews[i].ClearTargets();
@@ -52,9 +50,8 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         public void AnimateCenterChangedEditing(Vector2 center, CircularList<Vector2> targets)
         {
             StopCurrentAnimation();
-
             pointPool.ResizePool(targets.Items);
-            // OrbitPointMatcher.MatchPointsToPositions(center, pointPool.PointsViews, targets);
+
             OrbitPointMatcher.MatchPointsToPositions(center, pointPool.PointsViews, targets);
 
             _coroutine = StartCoroutine(AnimateMotionToTargets(pointPool.PointsViews));
@@ -65,7 +62,6 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             StopCurrentAnimation();
 
             CircularList<OrbitPointView> pointViews = pointPool.PointsViews;
-
             for (int i = 0; i < pointViews.Count; ++i)
             {
                 pointViews[i].ClearTargets();

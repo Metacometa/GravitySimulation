@@ -1,13 +1,12 @@
 using System;
-using GravitySimulator.Gameplay.Orbital.Core;
-using GravitySimulator.Gameplay.Orbital.View;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using GravitySimulator.Interaction.Drag;
 using GravitySimulator.Interaction.Input;
 using UnityEngine;
 using Zenject;
 
-namespace GravitySimulator.Gameplay.Orbital.Interaction
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.Interaction
 {
     public class OrbitEditor : ComposableChild<OrbitRoot>
     {

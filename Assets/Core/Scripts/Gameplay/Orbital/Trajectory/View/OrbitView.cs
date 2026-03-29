@@ -1,10 +1,10 @@
-using GravitySimulator.Gameplay.Orbital.Core;
-using GravitySimulator.Gameplay.Orbital.View.Line;
-using GravitySimulator.Gameplay.Orbital.View.Points;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.View.Line;
+using GravitySimulator.Gameplay.Orbital.Trajectory.View.Points;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View
 {
     public class OrbitView : ComposableChild<OrbitRoot>
     {

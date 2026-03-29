@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dec839e9b874a142b40972c3042c244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 15
+  animationSpeed: 10
   pointPool: {fileID: 489454398263867647}
 --- !u!114 &489454398263867647
 MonoBehaviour:
@@ -239,13 +239,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4805076843795065910}
   - component: {fileID: 5330302537598900399}
+  - component: {fileID: 1202788608696334420}
   - component: {fileID: 2043487456148254982}
   - component: {fileID: 1994696548535901837}
   - component: {fileID: 4888587640405282422}
-  - component: {fileID: 4418743972567234202}
   - component: {fileID: 8550378575435717118}
+  - component: {fileID: 7078303251350664355}
   m_Layer: 0
-  m_Name: Orbit
+  m_Name: Trajectory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,6 +375,23 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1202788608696334420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008641152509975480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378e70d2feebe0a4e9918ebee7abfd64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbit: {fileID: 0}
+  path: {fileID: 0}
+  bodyMotion: {fileID: 0}
+  editor: {fileID: 0}
+  view: {fileID: 0}
 --- !u!114 &2043487456148254982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attractor: {fileID: 0}
   radius: 5
-  radiusChangingSpeed: 3
+  radiusChangingSpeed: 1
 --- !u!114 &1994696548535901837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,20 +434,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointsView: {fileID: 1746687999331121703}
   pathLineView: {fileID: 3378216284800877182}
---- !u!114 &4418743972567234202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7008641152509975480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e47f73121bb2dfc418f725da3cd49b38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motionSpeed: 5
-  distanceToGetNextPoint: 0.1
 --- !u!114 &8550378575435717118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,3 +449,30 @@ MonoBehaviour:
   IsEditing: 0
   draggable: {fileID: 0}
   dragMove: {fileID: 0}
+--- !u!50 &7078303251350664355
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008641152509975480}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

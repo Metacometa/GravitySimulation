@@ -1,17 +1,18 @@
-using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Infrastructure;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Mechanics;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.Mechanics
+namespace GravitySimulator.Gameplay.Orbital.Body.Mechanics
 {
-    public class OrbitMotion : ComposableChild<OrbitRoot>
+    public class OrbitBodyMotion : ComposableChild<OrbitRoot>
     {
         [SerializeField] private float motionSpeed;
         [SerializeField] private float distanceToGetNextPoint;
 
         private OrbitPath _path;
 
-        // private Vector2 _targetPoint;
         private int _targetPointIndex;
 
         public override void Initialize(OrbitRoot root)
@@ -23,17 +24,17 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         public override void Bind()
         {
-            _path.PathUpdated += UpdateTargetPoint;
+            _path.Updated += UpdateTargetPoint;
         }
 
         public override void Activate()
         {
-            UpdateTargetPoint();
+            UpdateTargetPoint(OrbitPathUpdateType.Attractor);
         }
 
         private void OnDestroy()
         {
-            _path.PathUpdated -= UpdateTargetPoint;
+            _path.Updated -= UpdateTargetPoint;
         }
 
         private void FixedUpdate()
@@ -59,9 +60,9 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
             Root.Rigidbody.linearVelocity = dir * motionSpeed;
         }
     
-        private void UpdateTargetPoint()
+        private void UpdateTargetPoint(OrbitPathUpdateType orbitPathUpdateType)
         {
-            if (_path.TryGetIndexOfClosestPoint(Root.Position, out int closestIndex))
+            if (Math.Geometry2D.TryGetClosestIndex(_path.Points.Items, Root.Position, out int closestIndex))
             {
                 _targetPointIndex = closestIndex;
             }            

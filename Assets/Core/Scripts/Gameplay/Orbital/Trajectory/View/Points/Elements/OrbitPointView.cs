@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View.Points
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
 {
     public class OrbitPointView : MonoBehaviour
     {

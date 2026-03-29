@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GravitySimulator.Infrastructure.Collections;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View.Points
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
 {
     public class OrbitPointPool : MonoBehaviour
     {
@@ -28,7 +28,7 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             {   
                 for (int i = _poolSize; i < targetPoints.Count; ++i)
                 {
-                    Vector2 point = targetPoints[i];
+                    Vector2 point = i == 0 ? targetPoints[i] : _pointViews[i - 1].Position;
                     
                     OrbitPointView pointView = Instantiate(pointPrefab, point, Quaternion.identity, pointsPool);
                     _pointViews.Add(pointView);
@@ -40,8 +40,10 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
             {
                 for (int i = targetPoints.Count; i < _poolSize; ++i)
                 {
-                    _pointViews.Remove(_pointViews[i]);
-                    // _pointViews[i].gameObject.SetActive(false);
+                    OrbitPointView orbitPointView = _pointViews[i];
+
+                    _pointViews.Remove(orbitPointView);
+                    Destroy(orbitPointView.gameObject);
                 }
 
                 _poolSize = targetPoints.Count;

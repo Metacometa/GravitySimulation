@@ -220,18 +220,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrbitPlanet (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 2123018057116667718, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: radiusChangingSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.25
@@ -504,18 +492,6 @@ PrefabInstance:
     - target: {fileID: 1510317622149897247, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_Name
       value: OrbitPlanet (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123018057116667718, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: radiusChangingSpeed
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -826,18 +802,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrbitPlanet (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 2123018057116667718, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: radiusChangingSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.73
@@ -932,18 +896,6 @@ PrefabInstance:
     - target: {fileID: 1510317622149897247, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_Name
       value: OrbitPlanet (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123018057116667718, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: radiusChangingSpeed
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1229,18 +1181,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrbitPlanet (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 2123018057116667718, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: radiusChangingSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.73
@@ -1490,18 +1430,6 @@ PrefabInstance:
     - target: {fileID: 1510317622149897247, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_Name
       value: OrbitPlanet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123018057116667718, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: attractor
-      value: 
-      objectReference: {fileID: 5456165952684986655}
-    - target: {fileID: 4359234387553257690, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
-      propertyPath: radiusChangingSpeed
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8280652758312955313, guid: cb60eff966b6e724a8f43d524d0cca38, type: 3}
       propertyPath: m_LocalPosition.x

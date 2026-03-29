@@ -1,17 +1,18 @@
-using GravitySimulator.Gameplay.Orbital.Interaction;
-using GravitySimulator.Gameplay.Orbital.Mechanics;
-using GravitySimulator.Gameplay.Orbital.View;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Mechanics;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Interaction;
+using GravitySimulator.Gameplay.Orbital.Trajectory.View;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
+using GravitySimulator.Gameplay.Orbital.Body.Mechanics;
 
-namespace GravitySimulator.Gameplay.Orbital.Core
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class OrbitRoot : ComposableRoot
     {
         public Orbit Orbit => orbit;
         public OrbitPath Path => path;
-        public OrbitMotion Motion => motion;
+        public OrbitBodyMotion Motion => bodyMotion;
         public OrbitEditor Editor => editor;
         public OrbitView View => view;
 
@@ -22,7 +23,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
         [Header("Component References")]
         [SerializeField] private Orbit orbit;
         [SerializeField] private OrbitPath path;
-        [SerializeField] private OrbitMotion motion;
+        [SerializeField] private OrbitBodyMotion bodyMotion;
         [SerializeField] private OrbitEditor editor;
         [SerializeField] private OrbitView view;
 
@@ -34,7 +35,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
 
             orbit.Initialize(this);
             path.Initialize(this);
-            motion.Initialize(this);
+            bodyMotion.Initialize(this);
             editor.Initialize(this);
             view.Initialize(this);
         }
@@ -43,7 +44,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
         {
             orbit.Bind();
             path.Bind();
-            motion.Bind();
+            bodyMotion.Bind();
             editor.Bind();
             view.Bind();
         }
@@ -52,7 +53,7 @@ namespace GravitySimulator.Gameplay.Orbital.Core
         {
             orbit.Activate();
             path.Activate();
-            motion.Activate();
+            bodyMotion.Activate();
             editor.Activate();
             view.Activate();
         }

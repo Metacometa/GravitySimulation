@@ -1,16 +1,16 @@
 using System;
-using System.Collections.Generic;
-using GravitySimulator.Gameplay.Orbital.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Infrastructure;
 using GravitySimulator.Infrastructure.Collections;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using GravitySimulator.Math;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.Mechanics
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.Mechanics
 {
     public class OrbitPath : ComposableChild<OrbitRoot>
     {
-        public event Action PathUpdated;
+        public event Action<OrbitPathUpdateType> Updated;
 
         public CircularList<Vector2> Points => _points;
         public bool HasPath => _points.Count > 0; 
@@ -29,17 +29,15 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
 
         public override void Bind()
         {
-            _orbit.RadiusChanged += RecalculatePath;            
-            _orbit.AttractorChanged += RecalculatePath;       
+            _orbit.Changed += RecalculatePath;            
         }
 
         private void OnDestroy()
         {
-            _orbit.RadiusChanged -= RecalculatePath;    
-            _orbit.AttractorChanged -= RecalculatePath;     
+            _orbit.Changed -= RecalculatePath;    
         }
 
-        private void RecalculatePath()
+        private void RecalculatePath(OrbitChangeType orbitChangeType)
         {
             _points.Clear();
             if (pointSpacing <= 0) return;
@@ -62,30 +60,8 @@ namespace GravitySimulator.Gameplay.Orbital.Mechanics
                 _points.Add(pathPoint);
             }
 
-            PathUpdated?.Invoke();
+            OrbitPathUpdateType orbitPathUpdateType = orbitChangeType.ToPathUpdateType();
+            Updated?.Invoke(orbitPathUpdateType);
         }
-    
-        public bool TryGetIndexOfClosestPoint(Vector2 source, out int closestIndex)
-        {
-            closestIndex = -1;
-
-            if (_points.Count == 0)
-            {
-                return false;    
-            }    
-            
-            float closestDistance = Mathf.Infinity;
-            for (int i = 0; i < _points.Count; ++i)
-            {
-                float distance = Vector2.Distance(_points[i], source);
-                if (distance < closestDistance)
-                {
-                    closestIndex = i;
-                    closestDistance = distance;
-                }
-            }
-
-            return true;
-        } 
     }
 }

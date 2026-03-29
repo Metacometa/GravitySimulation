@@ -1,10 +1,11 @@
-using GravitySimulator.Gameplay.Orbital.Core;
-using GravitySimulator.Gameplay.Orbital.Interaction;
-using GravitySimulator.Gameplay.Orbital.Mechanics;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Infrastructure;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Interaction;
+using GravitySimulator.Gameplay.Orbital.Trajectory.Mechanics;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
-namespace GravitySimulator.Gameplay.Orbital.View.Points
+namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
 {
     public class OrbitPointsView : ComposableChild<OrbitRoot>
     {        
@@ -28,8 +29,8 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         {
             _edit.EditStarted += ShowOrbit;
 
-            _orbit.RadiusChanged += RebuildPoints;
-            _orbit.AttractorChanged += MovePoints;
+            _path.Updated += RebuildPoints;
+            _path.Updated += MovePoints;
     
             _edit.EditEnded += HideOrbit;   
         }  
@@ -38,8 +39,8 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
         {
             _edit.EditStarted -= ShowOrbit;
 
-            _orbit.RadiusChanged -= RebuildPoints;
-            _orbit.AttractorChanged -= MovePoints;
+            _path.Updated -= RebuildPoints;
+            _path.Updated -= MovePoints;
 
             _edit.EditEnded -= HideOrbit; 
         }
@@ -56,18 +57,22 @@ namespace GravitySimulator.Gameplay.Orbital.View.Points
                 orbitPointsAnimator.AnimateEditingEnd(Root.Orbit.AttractorCenter);            
         }
 
-        private void MovePoints()
+        private void MovePoints(OrbitPathUpdateType orbitPathUpdateType)
         {
+            if (orbitPathUpdateType != OrbitPathUpdateType.Attractor) return;
+
             if (_edit.IsEditing == true &&
                 _orbit.AttractorCenter != null)
                 orbitPointsAnimator.AnimateCenterChangedEditing(Root.Orbit.AttractorCenter, _path.Points);
         }
 
-        private void RebuildPoints()
+        private void RebuildPoints(OrbitPathUpdateType orbitPathUpdateType)
         {
+            if (orbitPathUpdateType != OrbitPathUpdateType.Radius) return;
+
             if (_edit.IsEditing == true &&
                 _orbit.AttractorCenter != null)
-                orbitPointsAnimator.AnimateRadiusEditing(_path.Points.Items);            
+                orbitPointsAnimator.AnimateRadiusEditing(_path.Points);            
         }
     }
 }

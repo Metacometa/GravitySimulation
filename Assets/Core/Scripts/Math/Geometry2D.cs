@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GravitySimulator.Gameplay.Orbital.View.Points;
+using GravitySimulator.Gameplay.Orbital.Trajectory.View.Points;
 using UnityEngine;
 
 namespace GravitySimulator.Math
