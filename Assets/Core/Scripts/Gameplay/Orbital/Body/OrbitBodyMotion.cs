@@ -6,20 +6,23 @@ using UnityEngine;
 
 namespace GravitySimulator.Gameplay.Orbital.Body.Mechanics
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class OrbitBodyMotion : ComposableChild<OrbitRoot>
     {
         [SerializeField] private float motionSpeed;
         [SerializeField] private float distanceToGetNextPoint;
 
         private OrbitPath _path;
-
         private int _targetPointIndex;
+        private Rigidbody2D _rb;
 
         public override void Initialize(OrbitRoot root)
         {
             base.Initialize(root);
         
             _path = Root.Path;
+
+            _rb = GetComponent<Rigidbody2D>();
         }
 
         public override void Bind()
@@ -43,7 +46,7 @@ namespace GravitySimulator.Gameplay.Orbital.Body.Mechanics
                 _path.HasPath == false) 
                 return;
 
-            float distance = Vector2.Distance(Root.Position, _path.Points[_targetPointIndex]);
+            float distance = Vector2.Distance(Root.BodyPosition, _path.Points[_targetPointIndex]);
             
             if (distance < distanceToGetNextPoint)
             {
@@ -55,14 +58,14 @@ namespace GravitySimulator.Gameplay.Orbital.Body.Mechanics
 
         private void Move(Vector2 target)
         {
-            Vector2 dir = (target - Root.Position).normalized;
+            Vector2 dir = (target - Root.BodyPosition).normalized;
 
-            Root.Rigidbody.linearVelocity = dir * motionSpeed;
+            _rb.linearVelocity = dir * motionSpeed;
         }
     
         private void UpdateTargetPoint(OrbitPathUpdateType orbitPathUpdateType)
         {
-            if (Math.Geometry2D.TryGetClosestIndex(_path.Points.Items, Root.Position, out int closestIndex))
+            if (Math.Geometry2D.TryGetClosestIndex(_path.Points.Items, Root.BodyPosition, out int closestIndex))
             {
                 _targetPointIndex = closestIndex;
             }            

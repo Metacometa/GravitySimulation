@@ -63,7 +63,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 
             foreach (Attractor attractorItem in _attractorRegistry.Items)
             {
-                float distance = ((Vector2)attractorItem.transform.position - Root.Position).magnitude;
+                float distance = ((Vector2)attractorItem.transform.position - Root.BodyPosition).magnitude;
 
                 if (distance < closestDistance)
                 {

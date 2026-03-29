@@ -7,7 +7,6 @@ using GravitySimulator.Gameplay.Orbital.Body.Mechanics;
 
 namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     public class OrbitRoot : ComposableRoot
     {
         public Orbit Orbit => orbit;
@@ -16,9 +15,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
         public OrbitEditor Editor => editor;
         public OrbitView View => view;
 
-        public Vector2 Position => transform.position;
-
-        public Rigidbody2D Rigidbody => _rb;
+        public Vector2 BodyPosition => bodyMotion.transform.position;
 
         [Header("Component References")]
         [SerializeField] private Orbit orbit;
@@ -27,12 +24,8 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
         [SerializeField] private OrbitEditor editor;
         [SerializeField] private OrbitView view;
 
-        private Rigidbody2D _rb;
-
         public override void Initialize()
         {
-            _rb = GetComponent<Rigidbody2D>();
-
             orbit.Initialize(this);
             path.Initialize(this);
             bodyMotion.Initialize(this);
