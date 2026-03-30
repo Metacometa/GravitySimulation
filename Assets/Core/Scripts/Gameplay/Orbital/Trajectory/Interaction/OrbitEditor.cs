@@ -23,6 +23,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Interaction
         [SerializeField] private Draggable draggable;
         [SerializeField] private DragMove dragMove;
 
+        [Inject] private EnergySystem _energySystem;
         [Inject] private InputReader _inputReader;
 
         public override void Bind()
@@ -53,11 +54,14 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Interaction
 
         private void OnRadiusEdited(float radiusDelta)
         {
-            if (draggable.IsDragging)
-            {
-                float invertedRadiusDelta = -radiusDelta;
-                RadiusEdited?.Invoke(invertedRadiusDelta);
-            }
+            if (draggable.IsDragging == false) return;
+            
+            EnergyCostType energyCostType = EnergyCostType.OrbitRadiusChanging;
+            if (_energySystem.TrySpendEnergy(energyCostType) == false)
+                return;
+            
+            float invertedRadiusDelta = -radiusDelta;
+            RadiusEdited?.Invoke(invertedRadiusDelta);
         }
 
         private void OnPositionEdited()
