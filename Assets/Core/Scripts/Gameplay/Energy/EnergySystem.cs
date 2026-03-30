@@ -1,8 +1,5 @@
-using GravitySimulator.Infrastructure.ComposableBehaviour;
-using GravitySimulator.Gameplay.Attraction.Infrastructure;
 using UnityEngine;
-using Zenject;
-using System.Numerics;
+using System;
 
 namespace GravitySimulator.Gameplay.Energy
 {
@@ -10,7 +7,12 @@ namespace GravitySimulator.Gameplay.Energy
     {
         public event Action<int> EnergyUpdated;
             
-        private int _energyValue = 0;
+        private int _energyValue = 50000;
+
+        private void Awake()
+        {
+            EnergyUpdated?.Invoke(_energyValue);
+        }
 
         public bool TrySpendEnergy(EnergyCostType energyCostType)
         {
@@ -18,7 +20,7 @@ namespace GravitySimulator.Gameplay.Energy
                 _energyValue >= amount)
             {
                 _energyValue -= amount;
-                EnergyUpdated?.Invoke(amount);
+                EnergyUpdated?.Invoke(_energyValue);
 
                 return true;
             }

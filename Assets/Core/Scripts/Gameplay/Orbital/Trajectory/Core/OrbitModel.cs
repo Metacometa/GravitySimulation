@@ -8,7 +8,7 @@ using Zenject;
 
 namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 {
-    public class Orbit : ComposableChild<OrbitRoot>
+    public class OrbitModel : ComposableChild<OrbitRoot>
     {
         public event Action<OrbitChangeType> Changed;
 

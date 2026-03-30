@@ -1,3 +1,4 @@
+using System.Collections;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using UnityEngine;
 
@@ -6,22 +7,22 @@ namespace GravitySimulator.Gameplay.Director
     public class Director : ComposableRoot
     {
         [Header("Settings")]
-        [SerializeField] private float spawnStarInterval;
+        [SerializeField] private float spawnInterval;
 
         [Header("Component References")]
-        [SerializeField] private Spawner spawner;
+        [SerializeField] private AttractorSpawner spawner;
 
         private void Start()
         {
-            StartCoroutine(SpawnStar());
+            StartCoroutine(SpawnAttractor());
         }
 
-        private IEnumerator SpawnStar()
+        private IEnumerator SpawnAttractor()
         {
             while (true)
             {                
-                spawner.SpawnStar();
-                yield return new WaitForSeconds(spawnStarInterval); 
+                spawner.Spawn();
+                yield return new WaitForSeconds(spawnInterval); 
             }
         }
     }

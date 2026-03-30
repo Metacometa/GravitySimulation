@@ -9,7 +9,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 {
     public class OrbitRoot : ComposableRoot
     {
-        public Orbit Orbit => orbit;
+        public OrbitModel Orbit => model;
         public OrbitPath Path => path;
         public OrbitBodyMotion Motion => bodyMotion;
         public OrbitEditor Editor => editor;
@@ -18,7 +18,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
         public Vector2 BodyPosition => bodyMotion.transform.position;
 
         [Header("Component References")]
-        [SerializeField] private Orbit orbit;
+        [SerializeField] private OrbitModel model;
         [SerializeField] private OrbitPath path;
         [SerializeField] private OrbitBodyMotion bodyMotion;
         [SerializeField] private OrbitEditor editor;
@@ -26,7 +26,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 
         public override void Initialize()
         {
-            orbit.Initialize(this);
+            model.Initialize(this);
             path.Initialize(this);
             bodyMotion.Initialize(this);
             editor.Initialize(this);
@@ -35,7 +35,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
         
         public override void Bind()
         {
-            orbit.Bind();
+            model.Bind();
             path.Bind();
             bodyMotion.Bind();
             editor.Bind();
@@ -44,7 +44,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Core
 
         public override void Activate()
         {
-            orbit.Activate();
+            model.Activate();
             path.Activate();
             bodyMotion.Activate();
             editor.Activate();

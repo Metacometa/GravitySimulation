@@ -12,7 +12,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
         [Header("Component References")]
         [SerializeField] private OrbitPointsAnimator orbitPointsAnimator;
 
-        private Orbit _orbit;
+        private OrbitModel _model;
         private OrbitPath _path;
         private OrbitEditor _edit;
 
@@ -20,7 +20,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
         {
             base.Initialize(root);
             
-            _orbit = Root.Orbit;
+            _model = Root.Orbit;
             _path = Root.Path;
             _edit = Root.Editor;
         }
@@ -47,13 +47,13 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
 
         public void ShowOrbit()
         {
-            if (_orbit.AttractorCenter != null)
+            if (_model.AttractorCenter != null)
                 orbitPointsAnimator.AnimateEditingStart(Root.Orbit.AttractorCenter, _path.Points);
         }
 
         public void HideOrbit()
         {
-            if (_orbit.AttractorCenter != null)
+            if (_model.AttractorCenter != null)
                 orbitPointsAnimator.AnimateEditingEnd(Root.Orbit.AttractorCenter);            
         }
 
@@ -62,7 +62,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
             if (orbitPathUpdateType != OrbitPathUpdateType.Attractor) return;
 
             if (_edit.IsEditing == true &&
-                _orbit.AttractorCenter != null)
+                _model.AttractorCenter != null)
                 orbitPointsAnimator.AnimateCenterChangedEditing(Root.Orbit.AttractorCenter, _path.Points);
         }
 
@@ -71,7 +71,7 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.View.Points
             if (orbitPathUpdateType != OrbitPathUpdateType.Radius) return;
 
             if (_edit.IsEditing == true &&
-                _orbit.AttractorCenter != null)
+                _model.AttractorCenter != null)
                 orbitPointsAnimator.AnimateRadiusEditing(_path.Points);            
         }
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1265772768511390668}
   - component: {fileID: 8333262998617151959}
   m_Layer: 0
-  m_Name: Star
+  m_Name: Attractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

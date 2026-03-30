@@ -1,23 +1,28 @@
-﻿namespace DefaultNamespace;
+﻿using TMPro;
+using UnityEngine;
+using Zenject;
 
-public class EnergyView
+namespace GravitySimulator.Gameplay.Energy
 {
-    [SerializeField] private TMP_Text _energyValueText;
-
-    [Inject] private EnergySystem _energySystem;
-
-    private void Awake()
+    public class EnergyView : MonoBehaviour
     {
-        _energySystem.EnergyUpdated += UpdateText;
-    }
+        [SerializeField] private TMP_Text _energyValueText;
 
-    private void OnDestroy()
-    {
-        _energySystem.EnergyUpdated -= UpdateText;
-    }
-    
-    private void UpdateText(int energy)
-    {
-        _enegyValueText.text = energy.toString();
+        [Inject] private EnergySystem _energySystem;
+
+        private void Awake()
+        {
+            _energySystem.EnergyUpdated += UpdateText;
+        }
+
+        private void OnDestroy()
+        {
+            _energySystem.EnergyUpdated -= UpdateText;
+        }
+
+        private void UpdateText(int energy)
+        {
+            _energyValueText.text = "Energy: " + energy.ToString();
+        }
     }
 }

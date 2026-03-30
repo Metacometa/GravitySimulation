@@ -17,34 +17,34 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Mechanics
 
         [SerializeField] private int pointSpacing;
 
-        private Orbit _orbit;
+        private OrbitModel _model;
         private CircularList<Vector2> _points = new();
 
         public override void Initialize(OrbitRoot root)
         {
             base.Initialize(root);
         
-            _orbit = Root.Orbit;
+            _model = Root.Orbit;
         }
 
         public override void Bind()
         {
-            _orbit.Changed += RecalculatePath;            
+            _model.Changed += RecalculatePath;            
         }
 
         private void OnDestroy()
         {
-            _orbit.Changed -= RecalculatePath;    
+            _model.Changed -= RecalculatePath;    
         }
 
         private void RecalculatePath(OrbitChangeType orbitChangeType)
         {
             _points.Clear();
             if (pointSpacing <= 0) return;
-            if (_orbit.HasAttractor == false) return;
+            if (_model.HasAttractor == false) return;
 
             int pointCount = Mathf.CeilToInt(
-                Geometry2D.Circumference(_orbit.Radius) / pointSpacing);
+                Geometry2D.Circumference(_model.Radius) / pointSpacing);
 
             float angleStep = 360f / pointCount;
 
@@ -52,8 +52,8 @@ namespace GravitySimulator.Gameplay.Orbital.Trajectory.Mechanics
             {
                 float angleRad = i * angleStep * Mathf.Deg2Rad;         
                 Vector2 pathPoint = Geometry2D.PointOnCircle(
-                    _orbit.AttractorCenter, 
-                    _orbit.Radius,
+                    _model.AttractorCenter, 
+                    _model.Radius,
                     angleRad
                 );
 

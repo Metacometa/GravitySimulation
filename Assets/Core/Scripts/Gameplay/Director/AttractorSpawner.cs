@@ -1,8 +1,6 @@
-using GravitySimulator.Infrastructure.ComposableBehaviour;
 using GravitySimulator.Gameplay.Attraction.Infrastructure;
 using UnityEngine;
 using Zenject;
-using System.Numerics;
 
 namespace GravitySimulator.Gameplay.Director
 {
@@ -13,10 +11,10 @@ namespace GravitySimulator.Gameplay.Director
         [SerializeField] private float minDistanceBetweenAttractors;
 
         [Header("Component References")]
-        [SerializeField] private Transform starsParent;
+        [SerializeField] private Transform attractorParent;
 
         [Header("Prefabs")]
-        [SerializeField] private GameObject starPrefab;
+        [SerializeField] private GameObject attractorPrefab;
 
         [Inject] private DiContainer _container;
         [Inject] private AttractorRegistry _attractorRegistry;
@@ -24,12 +22,12 @@ namespace GravitySimulator.Gameplay.Director
         public void Spawn()
         {
             Vector2 spawnPosition = GeneratePosition();
-            _container.InstantiatePrefab(starPrefab, spawnPosition, Quaternion.Identity, starsParent);
+            _container.InstantiatePrefab(attractorPrefab, spawnPosition, Quaternion.identity, attractorParent);
         }
 
         private Vector2 GeneratePosition()
         {
-            Vector2 generatedPosition = Vector2.Zero;
+            Vector2 generatedPosition = Vector2.zero;
             bool areRulesFollowed = false;
 
             while (!areRulesFollowed)

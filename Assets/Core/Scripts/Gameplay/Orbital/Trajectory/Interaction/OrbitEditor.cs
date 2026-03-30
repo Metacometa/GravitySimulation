@@ -1,4 +1,5 @@
 using System;
+using GravitySimulator.Gameplay.Energy;
 using GravitySimulator.Gameplay.Orbital.Trajectory.Core;
 using GravitySimulator.Infrastructure.ComposableBehaviour;
 using GravitySimulator.Interaction.Drag;

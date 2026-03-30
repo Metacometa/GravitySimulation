@@ -1,8 +1,4 @@
-using GravitySimulator.Infrastructure.ComposableBehaviour;
-using GravitySimulator.Gameplay.Attraction.Infrastructure;
-using UnityEngine;
-using Zenject;
-using System.Numerics;
+using System.Collections.Generic;
 
 namespace GravitySimulator.Gameplay.Energy
 {
@@ -10,11 +6,11 @@ namespace GravitySimulator.Gameplay.Energy
     {
         public static IReadOnlyDictionary<EnergyCostType, int> Items => _energy;
         
-        private static readonly Dictionary<EnergyCostType, int> _energy
+        private static readonly Dictionary<EnergyCostType, int> _energy = new()
         {
             { EnergyCostType.OrbitRadiusChanging, 50 },
             { EnergyCostType.AttractorChanging, 100 },
-        }
+        };
     }
 
     public enum EnergyCostType

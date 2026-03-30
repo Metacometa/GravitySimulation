@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378e70d2feebe0a4e9918ebee7abfd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbit: {fileID: 2754066388142150898}
+  model: {fileID: 2754066388142150898}
   path: {fileID: 3146366880815166945}
   bodyMotion: {fileID: 2949653086637547390}
   editor: {fileID: 3813191438109451177}
