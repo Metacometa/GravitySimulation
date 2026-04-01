@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace GravitySimulator.Gameplay.Cluster.Infrastructure
+namespace GravitySimulator.Gameplay.Clusters.Infrastructure
 {
     public class ClusterInstaller : MonoInstaller
     {
