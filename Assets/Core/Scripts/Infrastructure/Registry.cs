@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GravitySimulator.Infrastructure
 {
@@ -10,5 +11,11 @@ namespace GravitySimulator.Infrastructure
     
         public virtual void Add(T item) => _items.Add(item);
         public virtual void Remove(T item) => _items.Remove(item);
+
+        public virtual T GetRandomValue()
+        {
+            int index = Random.Shared.Next(set.Count);;
+            return _items.ElementAt(index);
+        }
     }
 }

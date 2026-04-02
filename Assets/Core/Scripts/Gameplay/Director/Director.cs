@@ -12,6 +12,8 @@ namespace GravitySimulator.Gameplay.Director
         [Header("Component References")]
         [SerializeField] private AttractorSpawner spawner;
 
+        [Inject] private ClusterRegistry _clusterRegistry;
+
         private void Start()
         {
             StartCoroutine(SpawnAttractor());

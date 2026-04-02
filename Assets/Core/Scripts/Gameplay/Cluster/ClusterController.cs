@@ -15,10 +15,30 @@ namespace GravitySimulator.Gameplay.Clusters
 
         // private
 
+        private void Awake()
+        {
+            Cluster cluster = new Cluster();
+            _clusterRegistry.Add(cluster);
+        }
+
         public void Spawn()
         {
-            // Cluster kek = 
-            // _clusterRegistry.Add();
+            foreach (Cluster activeCluster in _clusterRegistry.Active)
+            {
+                if (activeCluster.IsActive())
+                {
+                    SpawnNewCluster(activeCluster);
+                }   
+                else
+                {
+                    _clusterRegistry.RemoveActive(activeCluster);
+                }
+            }
+        }
+
+        private void SpawnNewCluster(Cluster pivotCluster)
+        {
+            
         }
     }
 }
